@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multifamily Property Analyzer — Eau Claire / Chippewa Valley</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f0f2f5; color: #222; padding: 24px; }
+  .page-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; letter-spacing: 0.02em; }
+
+  /* ── INPUT FORM ── */
+  .form-wrap { max-width: 860px; margin: 0 auto 32px; background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .form-wrap h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 14px; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-top: 20px; }
+  .form-wrap h2:first-of-type { margin-top: 0; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px 20px; margin-bottom: 4px; }
+  .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; margin-bottom: 4px; }
+  .field label { display: block; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .field input, .field select { width: 100%; padding: 6px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; font-family: Arial, sans-serif; color: #222; background: #fafafa; }
+  .field input:focus, .field select:focus { outline: none; border-color: #1a1a2e; background: #fff; }
+  .field .hint { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+  /* repair items */
+  .repair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-bottom: 14px; }
+  .repair-row { display: flex; align-items: center; gap: 8px; }
+  .repair-row label { font-size: 12px; color: #555; flex: 1; }
+  .repair-row input { width: 110px; padding: 4px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; text-align: right; flex-shrink: 0; }
+
+  /* unit rents */
+  .unit-rent-grid { display: grid; gap: 10px; margin-bottom: 8px; }
+
+  /* buttons */
+  .btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .btn-primary { padding: 10px 28px; background: #1a1a2e; color: #fff; border: none; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 0.03em; font-family: Arial, sans-serif; }
+  .btn-primary:hover { background: #2d2d50; }
+  .btn-secondary { padding: 10px 20px; background: transparent; color: #888; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: Arial, sans-serif; }
+  .btn-secondary:hover { border-color: #888; color: #333; }
+
+  /* ── REPORT (matches R output exactly) ── */
+  .container { max-width: 860px; margin: 0 auto; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 0; }
+  .card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 0; }
+  .card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+  .card.full { grid-column: 1 / -1; }
+  .grid-gap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td { padding: 6px 4px; }
+  td:last-child { text-align: right; font-weight: 500; }
+  tr.subtotal td { border-top: 1px solid #ddd; font-weight: 700; padding-top: 8px; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .metric-box { background: #f8f9fb; border-radius: 6px; padding: 12px; text-align: center; }
+  .metric-box .label { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 4px; }
+  .metric-box .value { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .metric-box .sub { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .verdict-table td { padding: 8px 6px; }
+  tr.pass td:last-child { color: #1a7f3c; font-weight: 700; }
+  tr.ok  td:last-child { color: #b07d00; font-weight: 700; }
+  tr.fail td:last-child { color: #c0392b; font-weight: 700; }
+  tr.pass { border-left: 4px solid #1a7f3c; }
+  tr.ok   { border-left: 4px solid #f0a500; }
+  tr.fail { border-left: 4px solid #c0392b; }
+  .overall-box { margin-top: 16px; padding: 16px 20px; border-radius: 8px; font-size: 16px; font-weight: 700; text-align: center; }
+  .overall-pass { background: #e6f4ec; color: #1a7f3c; }
+  .overall-ok   { background: #fef8e7; color: #b07d00; }
+  .overall-fail { background: #fdecea; color: #c0392b; }
+  .upside-note { margin-top: 10px; font-size: 13px; color: #2471a3; background: #eaf4fb; padding: 8px 12px; border-radius: 6px; }
+  .cash-in { color: #7b2d8b; font-weight: 700; }
+  .cash-in-row td { background: #f9f0fc; }
+  .cash-in-total td { background: #f0d9f7; font-weight: 700; border-top: 2px solid #7b2d8b; }
+  .cash-in-legend { margin-top: 10px; font-size: 12px; color: #7b2d8b; background: #f9f0fc; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #7b2d8b; }
+  .notes { margin-top: 16px; font-size: 12px; color: #888; background: #fff; border-radius: 8px; padding: 16px 20px; line-height: 1.8; }
+  .header-bar { background: #1a1a2e; color: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
+  .header-bar h1 { font-size: 22px; color: #fff; margin-bottom: 4px; }
+  .header-bar .subtitle { font-size: 14px; color: #aab; }
+  .header-meta { display: flex; gap: 24px; margin-top: 12px; font-size: 13px; color: #ccd; flex-wrap: wrap; }
+  .header-meta span strong { color: #fff; }
+
+  #report { display: none; margin-top: 32px; }
+  .placeholder { max-width: 860px; margin: 0 auto; padding: 40px; text-align: center; color: #aaa; font-size: 14px; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+  @media print {
+    .form-wrap, .btn-row, .page-title, .placeholder { display: none !important; }
+    #report { display: block !important; margin-top: 0; }
+    body { background: white; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-title">Multifamily Property Analyzer — Eau Claire / Chippewa Valley Market</div>
+
+<!-- ══ INPUT FORM ══ -->
+<div class="form-wrap">
+
+  <h2>Property Info</h2>
+  <div class="form-grid" style="margin-bottom:12px;">
+    <div class="field" style="grid-column: 1 / -1;">
+      <label>Property Address</label>
+      <input type="text" id="address" value="123 Example St, Eau Claire, WI">
+    </div>
+    <div class="field">
+      <label>Number of Units</label>
+      <select id="num-units" onchange="buildUnitFields()">
+        <option value="2">2 — Duplex</option>
+        <option value="3">3 — Triplex</option>
+        <option value="4" selected>4 — Quadplex</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Purchase Price ($)</label>
+      <input type="number" id="purchase-price" value="160000">
+    </div>
+    <div class="field">
+      <label>Down Payment (%)</label>
+      <input type="number" id="down-pct" value="5" step="0.5">
+    </div>
+    <div class="field">
+      <label>Interest Rate (%)</label>
+      <input type="number" id="rate" value="6.6" step="0.125">
+    </div>
+    <div class="field">
+      <label>Loan Term (years)</label>
+      <input type="number" id="term" value="30">
+    </div>
+    <div class="field">
+      <label>Monthly Escrow ($)</label>
+      <input type="number" id="escrow" value="0">
+      <div class="hint">Taxes+insurance if escrowed; else 0</div>
+    </div>
+  </div>
+
+  <h2>Current &amp; Market Rents — Per Unit / Month</h2>
+  <div id="unit-fields"></div>
+
+  <h2>Expenses</h2>
+  <div class="form-grid" style="margin-bottom:12px;">
+    <div class="field">
+      <label>Vacancy Rate (%)</label>
+      <input type="number" id="vacancy" value="7" step="1">
+    </div>
+    <div class="field">
+      <label>Maintenance (% gross rents)</label>
+      <input type="number" id="maint-pct" value="10" step="1">
+    </div>
+    <div class="field">
+      <label>Property Mgmt (% gross rents)</label>
+      <input type="number" id="mgmt-pct" value="2" step="1">
+    </div>
+    <div class="field">
+      <label>Annual Property Taxes ($)</label>
+      <input type="number" id="taxes" value="2100">
+    </div>
+    <div class="field">
+      <label>Annual Insurance ($)</label>
+      <input type="number" id="insurance" value="1200">
+    </div>
+    <div class="field">
+      <label>Owner Utilities / Month ($)</label>
+      <input type="number" id="utilities" value="0">
+    </div>
+    <div class="field">
+      <label>CapEx Reserve ($/unit/month)</label>
+      <input type="number" id="capex" value="75">
+    </div>
+  </div>
+
+  <h2>Closing Costs</h2>
+  <div class="form-grid-2" style="margin-bottom:12px;">
+    <div class="field">
+      <label>Exact Closing Costs ($)</label>
+      <input type="number" id="closing-exact" value="0">
+      <div class="hint">From Loan Estimate — overrides % below if &gt; 0</div>
+    </div>
+    <div class="field">
+      <label>Closing Costs Estimate (%)</label>
+      <input type="number" id="closing-pct" value="2" step="0.5">
+      <div class="hint">Used only if exact amount is 0</div>
+    </div>
+  </div>
+
+  <h2>Repairs &amp; Rehab</h2>
+  <div class="repair-grid">
+    <div class="repair-row"><label>Roof</label><input type="number" id="r-roof" value="0"></div>
+    <div class="repair-row"><label>HVAC / Furnace</label><input type="number" id="r-hvac" value="0"></div>
+    <div class="repair-row"><label>Water Heater</label><input type="number" id="r-wh" value="0"></div>
+    <div class="repair-row"><label>Electrical</label><input type="number" id="r-elec" value="0"></div>
+    <div class="repair-row"><label>Plumbing</label><input type="number" id="r-plumb" value="0"></div>
+    <div class="repair-row"><label>Windows</label><input type="number" id="r-win" value="0"></div>
+    <div class="repair-row"><label>Flooring</label><input type="number" id="r-floor" value="0"></div>
+    <div class="repair-row"><label>Kitchens</label><input type="number" id="r-kit" value="0"></div>
+    <div class="repair-row"><label>Bathrooms</label><input type="number" id="r-bath" value="0"></div>
+    <div class="repair-row"><label>Paint Interior</label><input type="number" id="r-pint" value="0"></div>
+    <div class="repair-row"><label>Paint Exterior</label><input type="number" id="r-pext" value="0"></div>
+    <div class="repair-row"><label>Foundation / Structural</label><input type="number" id="r-found" value="0"></div>
+    <div class="repair-row"><label>Landscaping</label><input type="number" id="r-land" value="0"></div>
+    <div class="repair-row"><label>Other Repairs</label><input type="number" id="r-other" value="0"></div>
+  </div>
+  <div class="form-grid" style="margin-bottom:0;">
+    <div class="field">
+      <label>Contingency Buffer (%)</label>
+      <input type="number" id="contingency" value="15" step="5">
+    </div>
+    <div class="field">
+      <label>Repair Funding</label>
+      <select id="repair-funding">
+        <option value="cash">Cash (added to total invested)</option>
+        <option value="loan">Loan / HELOC (added to loan)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Vacancy During Rehab (months)</label>
+      <input type="number" id="rehab-vac" value="0" step="1">
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="runAnalysis()">▶ Run Analysis</button>
+    <button class="btn-secondary" onclick="window.print()">🖨 Print / Save PDF</button>
+    <button class="btn-secondary" onclick="location.reload()">Reset</button>
+  </div>
+</div>
+
+<div class="placeholder" id="placeholder">Fill in the inputs above and click <strong>Run Analysis</strong> to generate the report.</div>
+
+<div id="report"></div>
+
+<script>
+const fmt  = n => Math.round(n).toLocaleString('en-US');
+const fmt2 = n => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmtP = (n, d=2) => n.toFixed(d) + '%';
+
+function pmt(rate, nper, pv) {
+  if (rate === 0) return pv / nper;
+  const r = rate / 12;
+  const N = nper * 12;
+  return pv * r * Math.pow(1+r, N) / (Math.pow(1+r, N) - 1);
+}
+
+function buildUnitFields() {
+  const n = +document.getElementById('num-units').value;
+  const cols = `repeat(${n}, 1fr)`;
+  let html = '';
+
+  // Current rents
+  html += `<div style="display:grid;grid-template-columns:${cols};gap:10px;margin-bottom:4px;">`;
+  for (let i = 0; i < n; i++) html += `<div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.05em;text-align:center;">Unit ${i+1} Current ($)</div>`;
+  html += '</div>';
+  html += `<div style="display:grid;grid-template-columns:${cols};gap:10px;margin-bottom:14px;">`;
+  for (let i = 0; i < n; i++) html += `<input type="number" id="cur-${i}" value="900" style="padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:13px;text-align:right;width:100%;">`;
+  html += '</div>';
+
+  // Market rents
+  html += `<div style="display:grid;grid-template-columns:${cols};gap:10px;margin-bottom:4px;">`;
+  for (let i = 0; i < n; i++) html += `<div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.05em;text-align:center;">Unit ${i+1} Market ($)</div>`;
+  html += '</div>';
+  html += `<div style="display:grid;grid-template-columns:${cols};gap:10px;margin-bottom:8px;">`;
+  for (let i = 0; i < n; i++) html += `<input type="number" id="mkt-${i}" value="900" style="padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:13px;text-align:right;width:100%;">`;
+  html += '</div>';
+
+  document.getElementById('unit-fields').innerHTML = html;
+}
+buildUnitFields();
+
+function runAnalysis() {
+  const address      = document.getElementById('address').value || 'Address Not Entered';
+  const numUnits     = +document.getElementById('num-units').value;
+  const price        = +document.getElementById('purchase-price').value;
+  const downPct      = +document.getElementById('down-pct').value / 100;
+  const rate         = +document.getElementById('rate').value / 100;
+  const term         = +document.getElementById('term').value;
+  const escrow       = +document.getElementById('escrow').value;
+  const vacancyRate  = +document.getElementById('vacancy').value / 100;
+  const maintPct     = +document.getElementById('maint-pct').value / 100;
+  const mgmtPct      = +document.getElementById('mgmt-pct').value / 100;
+  const taxes        = +document.getElementById('taxes').value;
+  const insurance    = +document.getElementById('insurance').value;
+  const utilities    = +document.getElementById('utilities').value;
+  const capexPerUnit = +document.getElementById('capex').value;
+  const closingExact = +document.getElementById('closing-exact').value;
+  const closingPct   = +document.getElementById('closing-pct').value / 100;
+  const contingencyPct = +document.getElementById('contingency').value / 100;
+  const repairFunding  = document.getElementById('repair-funding').value;
+  const rehabVacMo     = +document.getElementById('rehab-vac').value;
+
+  let currentRents = [], marketRents = [];
+  for (let i = 0; i < numUnits; i++) {
+    currentRents.push(+document.getElementById(`cur-${i}`).value || 0);
+    marketRents.push(+document.getElementById(`mkt-${i}`).value || 0);
+  }
+
+  const repairItems = {
+    'Roof':              +document.getElementById('r-roof').value,
+    'HVAC/Furnace':      +document.getElementById('r-hvac').value,
+    'Water Heater':      +document.getElementById('r-wh').value,
+    'Electrical':        +document.getElementById('r-elec').value,
+    'Plumbing':          +document.getElementById('r-plumb').value,
+    'Windows':           +document.getElementById('r-win').value,
+    'Flooring':          +document.getElementById('r-floor').value,
+    'Kitchens':          +document.getElementById('r-kit').value,
+    'Bathrooms':         +document.getElementById('r-bath').value,
+    'Paint Interior':    +document.getElementById('r-pint').value,
+    'Paint Exterior':    +document.getElementById('r-pext').value,
+    'Foundation/Struct': +document.getElementById('r-found').value,
+    'Landscaping':       +document.getElementById('r-land').value,
+    'Other Repairs':     +document.getElementById('r-other').value,
+  };
+
+  const totalRepairsBase = Object.values(repairItems).reduce((a,b)=>a+b,0);
+  const rehabContingency = totalRepairsBase * contingencyPct;
+  const totalRepairs     = totalRepairsBase + rehabContingency;
+  const rehabVacCost     = currentRents.reduce((a,b)=>a+b,0) * rehabVacMo;
+
+  const downPayment = price * downPct;
+  let loanAmount    = price - downPayment;
+  if (repairFunding === 'loan') loanAmount += totalRepairs;
+
+  const monthlyPI     = pmt(rate, term, loanAmount);
+  const annualDebtSvc = monthlyPI * 12;
+  const closingCosts  = closingExact > 0 ? closingExact : price * closingPct;
+  const monthlyPITI   = monthlyPI + escrow;
+
+  let totalCashInvested = downPayment + closingCosts + rehabVacCost;
+  if (repairFunding === 'cash') totalCashInvested += totalRepairs;
+
+  const grossCurrent = currentRents.reduce((a,b)=>a+b,0) * 12;
+  const grossMarket  = marketRents.reduce((a,b)=>a+b,0) * 12;
+  const rentUpside   = grossMarket - grossCurrent;
+
+  const vacancyLoss   = grossCurrent * vacancyRate;
+  const maintenance   = grossCurrent * maintPct;
+  const mgmtCost      = grossCurrent * mgmtPct;
+  const utilityAnnual = utilities * 12;
+  const totalExpenses = vacancyLoss + maintenance + mgmtCost + taxes + insurance + utilityAnnual;
+
+  const noiCurrent = grossCurrent - totalExpenses;
+  const noiMarket  = grossMarket - (grossMarket * vacancyRate) - (grossMarket * (maintPct + mgmtPct)) - taxes - insurance - utilityAnnual;
+
+  const annualCashflow  = noiCurrent - annualDebtSvc;
+  const monthlyCashflow = annualCashflow / 12;
+  const cashflowPerDoor = monthlyCashflow / numUnits;
+  const capexAnnual     = capexPerUnit * numUnits * 12;
+  const monthlyCFCapex  = (annualCashflow - capexAnnual) / 12;
+  const cfPerDoorCapex  = monthlyCFCapex / numUnits;
+
+  const capRateCurrent = price > 0 ? (noiCurrent / price) * 100 : 0;
+  const capRateMarket  = price > 0 ? (noiMarket  / price) * 100 : 0;
+  const coc            = totalCashInvested > 0 ? (annualCashflow / totalCashInvested) * 100 : 0;
+  const grm            = grossCurrent > 0 ? price / grossCurrent : 0;
+  const dscr           = annualDebtSvc > 0 ? noiCurrent / annualDebtSvc : 0;
+  const expenseRatio   = grossCurrent > 0 ? (totalExpenses / grossCurrent) * 100 : 0;
+
+  // Verdict
+  let flags = 0, verdictRows = '';
+
+  if (cashflowPerDoor >= 200) {
+    verdictRows += `<tr class="pass"><td>Cash Flow / Door</td><td>$${fmt2(cashflowPerDoor)}/mo</td><td>PASS — Strong</td></tr>`;
+  } else if (cashflowPerDoor >= 100) {
+    verdictRows += `<tr class="ok"><td>Cash Flow / Door</td><td>$${fmt2(cashflowPerDoor)}/mo</td><td>OK — Acceptable</td></tr>`;
+  } else {
+    verdictRows += `<tr class="fail"><td>Cash Flow / Door</td><td>$${fmt2(cashflowPerDoor)}/mo</td><td>FAIL — Too thin or negative</td></tr>`;
+    flags++;
+  }
+
+  if (capRateCurrent >= 7) {
+    verdictRows += `<tr class="pass"><td>Cap Rate (current)</td><td>${fmtP(capRateCurrent)}</td><td>PASS — Strong for EC market</td></tr>`;
+  } else if (capRateCurrent >= 5.5) {
+    verdictRows += `<tr class="ok"><td>Cap Rate (current)</td><td>${fmtP(capRateCurrent)}</td><td>OK — Acceptable</td></tr>`;
+  } else {
+    verdictRows += `<tr class="fail"><td>Cap Rate (current)</td><td>${fmtP(capRateCurrent)}</td><td>FAIL — Below market threshold</td></tr>`;
+    flags++;
+  }
+
+  if (dscr >= 1.25) {
+    verdictRows += `<tr class="pass"><td>Debt Service Coverage</td><td>${dscr.toFixed(2)}x</td><td>PASS — Lender-friendly</td></tr>`;
+  } else if (dscr >= 1.0) {
+    verdictRows += `<tr class="ok"><td>Debt Service Coverage</td><td>${dscr.toFixed(2)}x</td><td>OK — Barely covers debt</td></tr>`;
+  } else {
+    verdictRows += `<tr class="fail"><td>Debt Service Coverage</td><td>${dscr.toFixed(2)}x</td><td>FAIL — Does not cover debt service</td></tr>`;
+    flags++;
+  }
+
+  if (coc >= 6) {
+    verdictRows += `<tr class="pass"><td>Cash-on-Cash Return</td><td>${fmtP(coc)}</td><td>PASS — Good return on equity</td></tr>`;
+  } else if (coc >= 4) {
+    verdictRows += `<tr class="ok"><td>Cash-on-Cash Return</td><td>${fmtP(coc)}</td><td>OK — Marginal</td></tr>`;
+  } else {
+    verdictRows += `<tr class="fail"><td>Cash-on-Cash Return</td><td>${fmtP(coc)}</td><td>FAIL — Poor return on equity</td></tr>`;
+    flags++;
+  }
+
+  let overallLabel, overallClass, overallNote;
+  if      (flags === 0) { overallLabel = 'STRONG DEAL';           overallClass = 'overall-pass'; overallNote = 'All metrics pass.'; }
+  else if (flags === 1) { overallLabel = 'PROCEED WITH CAUTION';  overallClass = 'overall-ok';   overallNote = 'One metric below threshold.'; }
+  else if (flags === 2) { overallLabel = 'WEAK DEAL';             overallClass = 'overall-fail'; overallNote = 'Negotiate price down or walk.'; }
+  else                  { overallLabel = 'PASS ON THIS PROPERTY'; overallClass = 'overall-fail'; overallNote = 'Multiple red flags.'; }
+
+  // Repair rows
+  let repairHTML = '';
+  if (totalRepairsBase > 0) {
+    for (const [name, val] of Object.entries(repairItems)) {
+      if (val > 0) repairHTML += `<tr class="cash-in-row"><td>${name}</td><td class="cash-in">$${fmt(val)}</td></tr>`;
+    }
+    repairHTML += `<tr class="cash-in-row"><td>Contingency (${Math.round(contingencyPct*100)}%)</td><td class="cash-in">$${fmt(rehabContingency)}</td></tr>`;
+    if (rehabVacMo > 0) repairHTML += `<tr class="cash-in-row"><td>Vacancy During Rehab (${rehabVacMo} mo)</td><td class="cash-in">$${fmt(rehabVacCost)}</td></tr>`;
+    repairHTML += `<tr class="cash-in-total"><td>Total Rehab Cost</td><td class="cash-in">$${fmt(totalRepairs)}</td></tr>`;
+    repairHTML += `<tr><td>Funding Method</td><td>${repairFunding.toUpperCase()}</td></tr>`;
+    repairHTML += `<tr><td>All-In Purchase Cost</td><td>$${fmt(price + totalRepairs)}</td></tr>`;
+    repairHTML += `<tr class="cash-in-total"><td>Total Cash Invested</td><td class="cash-in">$${fmt(totalCashInvested)}</td></tr>`;
+  } else {
+    repairHTML = `<tr><td colspan="2">No repairs entered</td></tr><tr class="cash-in-total"><td>Total Cash Invested</td><td class="cash-in">$${fmt(totalCashInvested)}</td></tr>`;
+  }
+
+  const upsideHTML = rentUpside > 0
+    ? `<p class="upside-note">Rent upside: $${fmt(rentUpside)}/yr available if rents are brought to market rates.</p>`
+    : '';
+
+  document.getElementById('placeholder').style.display = 'none';
+  const report = document.getElementById('report');
+  report.style.display = 'block';
+
+  report.innerHTML = `
+  <div class="container">
+    <div class="header-bar">
+      <h1>Multifamily Property Analysis</h1>
+      <p class="subtitle">Eau Claire / Chippewa Valley Market</p>
+      <div class="header-meta">
+        <span><strong>${address}</strong></span>
+        <span>Units: <strong>${numUnits}</strong></span>
+        <span>Purchase Price: <strong>$${fmt(price)}</strong></span>
+        <span>Generated: <strong>${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</strong></span>
+      </div>
+    </div>
+
+    <div class="grid-gap">
+      <div class="card">
+        <h2>Financing</h2>
+        <table>
+          <tr class="cash-in-row"><td>Down Payment (${Math.round(downPct*100)}%)</td><td class="cash-in">$${fmt(downPayment)}</td></tr>
+          <tr><td>Loan Amount</td><td>$${fmt(loanAmount)}</td></tr>
+          <tr><td>Interest Rate</td><td>${fmtP(rate*100)}</td></tr>
+          <tr><td>Monthly P&amp;I</td><td>$${fmt2(monthlyPI)}</td></tr>
+          <tr class="subtotal"><td>Annual Debt Service</td><td>$${fmt(annualDebtSvc)}</td></tr>
+          <tr class="cash-in-row"><td>Closing Costs</td><td class="cash-in">$${fmt(closingCosts)}</td></tr>
+          <tr><td>Monthly Escrow</td><td>$${fmt(escrow)}/mo</td></tr>
+          <tr><td>True Monthly PITI</td><td>$${fmt2(monthlyPITI)}/mo</td></tr>
+          <tr><td>CapEx Reserve</td><td>$${fmt(capexPerUnit)}/unit/mo</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h2>Repairs &amp; Rehab</h2>
+        <table>${repairHTML}</table>
+      </div>
+      <div class="card">
+        <h2>Income</h2>
+        <table>
+          <tr><td>Current Gross Rent/yr</td><td>$${fmt(grossCurrent)}</td></tr>
+          <tr><td>Market Gross Rent/yr</td><td>$${fmt(grossMarket)}</td></tr>
+          <tr class="subtotal"><td>Rent Upside</td><td>$${fmt(rentUpside)}/yr</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h2>Annual Operating Expenses</h2>
+        <table>
+          <tr><td>Vacancy (${Math.round(vacancyRate*100)}%)</td><td>$${fmt(vacancyLoss)}</td></tr>
+          <tr><td>Maintenance (${Math.round(maintPct*100)}%)</td><td>$${fmt(maintenance)}</td></tr>
+          <tr><td>Management (${Math.round(mgmtPct*100)}%)</td><td>$${fmt(mgmtCost)}</td></tr>
+          <tr><td>Property Taxes</td><td>$${fmt(taxes)}</td></tr>
+          <tr><td>Insurance</td><td>$${fmt(insurance)}</td></tr>
+          <tr><td>Owner Utilities</td><td>$${fmt(utilityAnnual)}</td></tr>
+          <tr class="subtotal"><td>Total Expenses</td><td>$${fmt(totalExpenses)}</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h2>Net Operating Income</h2>
+        <table>
+          <tr><td>NOI (current rents)</td><td>$${fmt(noiCurrent)}/yr</td></tr>
+          <tr><td>NOI (market rents)</td><td>$${fmt(noiMarket)}/yr</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h2>Cash Flow</h2>
+        <table>
+          <tr><td>Annual Cash Flow</td><td>$${fmt(annualCashflow)}</td></tr>
+          <tr><td>Monthly Cash Flow</td><td>$${fmt2(monthlyCashflow)}</td></tr>
+          <tr class="subtotal"><td>Cash Flow Per Door/mo</td><td>$${fmt2(cashflowPerDoor)}</td></tr>
+          <tr><td>Cash Flow After CapEx/mo</td><td>$${fmt2(monthlyCFCapex)}</td></tr>
+          <tr><td>Cash Flow/Door After CapEx</td><td>$${fmt2(cfPerDoorCapex)}</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <div class="card full">
+        <h2>Key Metrics</h2>
+        <div class="metrics-grid">
+          <div class="metric-box">
+            <div class="label">Cap Rate (current)</div>
+            <div class="value">${fmtP(capRateCurrent)}</div>
+            <div class="sub">Market: ${fmtP(capRateMarket)}</div>
+          </div>
+          <div class="metric-box">
+            <div class="label">Cash-on-Cash Return</div>
+            <div class="value">${fmtP(coc)}</div>
+            <div class="sub">Target: 6%+</div>
+          </div>
+          <div class="metric-box">
+            <div class="label">Gross Rent Multiplier</div>
+            <div class="value">${grm.toFixed(1)}x</div>
+            <div class="sub">Lower is better</div>
+          </div>
+          <div class="metric-box">
+            <div class="label">Debt Service Coverage</div>
+            <div class="value">${dscr.toFixed(2)}x</div>
+            <div class="sub">Target: 1.25x+</div>
+          </div>
+          <div class="metric-box">
+            <div class="label">Expense Ratio</div>
+            <div class="value">${fmtP(expenseRatio, 1)}</div>
+            <div class="sub">Of gross rents</div>
+          </div>
+          <div class="metric-box" style="background:#f9f0fc;border:2px solid #7b2d8b;">
+            <div class="label" style="color:#7b2d8b;">Total Cash Invested</div>
+            <div class="value" style="color:#7b2d8b;">$${fmt(totalCashInvested)}</div>
+            <div class="sub" style="color:#7b2d8b;">* highlighted items above</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <div class="card full">
+        <h2>Deal Verdict</h2>
+        <table class="verdict-table">
+          <thead><tr><td><strong>Metric</strong></td><td><strong>Value</strong></td><td><strong>Result</strong></td></tr></thead>
+          <tbody>${verdictRows}</tbody>
+        </table>
+        ${upsideHTML}
+        <p class="cash-in-legend">* Purple highlighted values = components of Total Cash Invested (down payment + closing costs + repairs + rehab vacancy)</p>
+        <div class="overall-box ${overallClass}">${overallLabel} &mdash; ${overallNote}</div>
+      </div>
+    </div>
+
+    <div class="notes">
+      <strong>Notes:</strong> Analysis uses current rents as the conservative baseline. To model market rents,
+      set current rents equal to market rents and re-run. Always verify taxes and insurance with actual quotes.
+      Consult a CPA for depreciation and tax benefit analysis. This tool is for informational purposes only
+      and does not constitute financial advice.
+    </div>
+  </div>`;
+
+  document.getElementById('report').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
