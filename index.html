@@ -268,7 +268,7 @@ const fmt2 = n => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumF
 const fmtP = (n, d=2) => n.toFixed(d) + '%';
 
 function pmt(rate, nper, pv) {
-  if (rate === 0) return pv / nper;
+  if (rate === 0) return pv / (nper * 12);
   const r = rate / 12;
   const N = nper * 12;
   return pv * r * Math.pow(1+r, N) / (Math.pow(1+r, N) - 1);
@@ -297,7 +297,6 @@ function buildUnitFields() {
 
   document.getElementById('unit-fields').innerHTML = html;
 }
-buildUnitFields();
 
 function runAnalysis() {
   const address      = document.getElementById('address').value || 'Address Not Entered';
