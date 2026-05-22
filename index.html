@@ -587,6 +587,9 @@ function runAnalysis() {
 
   document.getElementById('report').scrollIntoView({ behavior: 'smooth' });
 }
+
+// Initialize unit fields on page load
+window.addEventListener('DOMContentLoaded', buildUnitFields);
 </script>
 </body>
 </html>
