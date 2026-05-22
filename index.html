@@ -589,7 +589,11 @@ function runAnalysis() {
 }
 
 // Initialize unit fields on page load
-window.addEventListener('DOMContentLoaded', buildUnitFields);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', buildUnitFields);
+} else {
+  buildUnitFields();
+}
 </script>
 </body>
 </html>
