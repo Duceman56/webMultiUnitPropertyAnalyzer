@@ -79,9 +79,46 @@
   .placeholder { max-width: 860px; margin: 0 auto; padding: 40px; text-align: center; color: #aaa; font-size: 14px; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
 
   @media print {
+    /* Force background colors to print */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    /* Hide everything except the report */
     .form-wrap, .btn-row, .page-title, .placeholder { display: none !important; }
     #report { display: block !important; margin-top: 0; }
-    body { background: white; padding: 0; }
+    body { background: white !important; padding: 0; margin: 0; }
+    /* Keep two-column grid on paper */
+    .grid-gap { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+    .metrics-grid { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; }
+    /* Prevent cards from breaking across pages awkwardly */
+    .card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ddd !important; }
+    .card.full { break-inside: avoid; page-break-inside: avoid; }
+    /* Keep header bar dark */
+    .header-bar { background: #1a1a2e !important; color: #fff !important; }
+    .header-bar h1 { color: #fff !important; }
+    .header-bar .subtitle { color: #aab !important; }
+    .header-meta { color: #ccd !important; }
+    .header-meta span strong { color: #fff !important; }
+    /* Purple cash rows */
+    .cash-in { color: #7b2d8b !important; }
+    .cash-in-row td { background: #f9f0fc !important; }
+    .cash-in-total td { background: #f0d9f7 !important; border-top: 2px solid #7b2d8b !important; }
+    .cash-in-legend { background: #f9f0fc !important; color: #7b2d8b !important; border-left: 4px solid #7b2d8b !important; }
+    /* Metric boxes */
+    .metric-box { background: #f8f9fb !important; }
+    /* Verdict colors */
+    tr.pass { border-left: 4px solid #1a7f3c !important; }
+    tr.ok   { border-left: 4px solid #f0a500 !important; }
+    tr.fail { border-left: 4px solid #c0392b !important; }
+    tr.pass td:last-child { color: #1a7f3c !important; }
+    tr.ok  td:last-child  { color: #b07d00 !important; }
+    tr.fail td:last-child { color: #c0392b !important; }
+    .overall-pass { background: #e6f4ec !important; color: #1a7f3c !important; }
+    .overall-ok   { background: #fef8e7 !important; color: #b07d00 !important; }
+    .overall-fail { background: #fdecea !important; color: #c0392b !important; }
+    .upside-note  { background: #eaf4fb !important; color: #2471a3 !important; }
+    .container { max-width: 100% !important; }
   }
 </style>
 </head>
@@ -101,6 +138,7 @@
     <div class="field">
       <label>Number of Units</label>
       <select id="num-units" onchange="buildUnitFields()">
+        <option value="1">1 — Single Family</option>
         <option value="2">2 — Duplex</option>
         <option value="3">3 — Triplex</option>
         <option value="4" selected>4 — Quadplex</option>
@@ -421,11 +459,11 @@ function runAnalysis() {
   report.innerHTML = `
   <div class="container">
     <div class="header-bar">
-      <h1>Multifamily Property Analysis</h1>
+      <h1>${numUnits === 1 ? 'Single Family Investment Analysis' : 'Multifamily Property Analysis'}</h1>
       <p class="subtitle">Eau Claire / Chippewa Valley Market</p>
       <div class="header-meta">
         <span><strong>${address}</strong></span>
-        <span>Units: <strong>${numUnits}</strong></span>
+        <span>${numUnits === 1 ? 'Single Family' : `Units: <strong>${numUnits}</strong>`}</span>
         <span>Purchase Price: <strong>$${fmt(price)}</strong></span>
         <span>Generated: <strong>${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</strong></span>
       </div>
