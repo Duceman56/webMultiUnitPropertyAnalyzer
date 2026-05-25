@@ -6,6 +6,7 @@
 <title>Multifamily Property Analyzer — Eau Claire / Chippewa Valley</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
   body { font-family: Arial, sans-serif; background: #f0f2f5; color: #222; padding: 24px; }
   .page-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; letter-spacing: 0.02em; }
 
@@ -37,7 +38,7 @@
   .btn-secondary:hover { border-color: #888; color: #333; }
 
   /* ── REPORT (matches R output exactly) ── */
-  .container { max-width: 860px; margin: 0 auto; }
+  .container { max-width: 860px; margin: 0 auto; overflow-x: hidden; }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 0; }
   .card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 0; }
   .card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
@@ -68,17 +69,17 @@
   .cash-in-row td { background: #f9f0fc; }
   .cash-in-total td { background: #f0d9f7; font-weight: 700; border-top: 2px solid #7b2d8b; }
   .cash-in-legend { margin-top: 10px; font-size: 12px; color: #7b2d8b; background: #f9f0fc; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #7b2d8b; }
-  .table-scroll { overflow-x: hidden; margin-top: 12px; max-width: 100%; }
-  .breakdown-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 11px; }
-  .breakdown-table th, .breakdown-table td { padding: 6px 5px; border-bottom: 1px solid #eee; word-break: break-word; white-space: normal; }
+  .table-scroll { overflow-x: hidden; margin-top: 8px; max-width: 100%; }
+  .breakdown-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 10px; line-height: 1.1; }
+  .breakdown-table th, .breakdown-table td { padding: 4px 4px; border-bottom: 1px solid #eee; word-break: break-word; white-space: normal; overflow: hidden; text-overflow: ellipsis; }
   .breakdown-table th { background: #f8f9fb; text-align: left; color: #444; }
   .breakdown-table th:nth-child(1), .breakdown-table td:nth-child(1) { width: 6%; }
-  .breakdown-table th:nth-child(2), .breakdown-table td:nth-child(2) { width: 16%; }
-  .breakdown-table th:nth-child(3), .breakdown-table td:nth-child(3) { width: 16%; }
-  .breakdown-table th:nth-child(4), .breakdown-table td:nth-child(4) { width: 16%; }
+  .breakdown-table th:nth-child(2), .breakdown-table td:nth-child(2) { width: 15%; }
+  .breakdown-table th:nth-child(3), .breakdown-table td:nth-child(3) { width: 15%; }
+  .breakdown-table th:nth-child(4), .breakdown-table td:nth-child(4) { width: 15%; }
   .breakdown-table th:nth-child(5), .breakdown-table td:nth-child(5) { width: 15%; }
-  .breakdown-table th:nth-child(6), .breakdown-table td:nth-child(6) { width: 15%; }
-  .breakdown-table th:nth-child(7), .breakdown-table td:nth-child(7) { width: 16%; }
+  .breakdown-table th:nth-child(6), .breakdown-table td:nth-child(6) { width: 17%; }
+  .breakdown-table th:nth-child(7), .breakdown-table td:nth-child(7) { width: 17%; }
   .notes { margin-top: 16px; font-size: 12px; color: #888; background: #fff; border-radius: 8px; padding: 16px 20px; line-height: 1.8; }
   .header-bar { background: #1a1a2e; color: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
   .header-bar h1 { font-size: 22px; color: #fff; margin-bottom: 4px; }
@@ -634,13 +635,13 @@ function runAnalysis() {
         <table class="breakdown-table">
           <thead>
             <tr>
-              <th>Year</th>
-              <th>Property Value</th>
-              <th>Remaining Loan</th>
+              <th>Yr</th>
+              <th>Value</th>
+              <th>Loan</th>
               <th>Equity</th>
-              <th>Gross Rent</th>
+              <th>Gross</th>
               <th>NOI</th>
-              <th>Annual Cash Flow</th>
+              <th>Cash Flow</th>
             </tr>
           </thead>
           <tbody>
