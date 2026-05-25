@@ -68,6 +68,10 @@
   .cash-in-row td { background: #f9f0fc; }
   .cash-in-total td { background: #f0d9f7; font-weight: 700; border-top: 2px solid #7b2d8b; }
   .cash-in-legend { margin-top: 10px; font-size: 12px; color: #7b2d8b; background: #f9f0fc; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #7b2d8b; }
+  .table-scroll { overflow-x: auto; margin-top: 12px; }
+  .breakdown-table { min-width: 980px; border-collapse: collapse; }
+  .breakdown-table th, .breakdown-table td { padding: 10px 8px; border-bottom: 1px solid #eee; }
+  .breakdown-table th { background: #f8f9fb; text-align: left; color: #444; }
   .notes { margin-top: 16px; font-size: 12px; color: #888; background: #fff; border-radius: 8px; padding: 16px 20px; line-height: 1.8; }
   .header-bar { background: #1a1a2e; color: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
   .header-bar h1 { font-size: 22px; color: #fff; margin-bottom: 4px; }
@@ -216,6 +220,27 @@
     </div>
   </div>
 
+  <h2>Projection Settings</h2>
+  <div class="form-grid" style="margin-bottom:12px;">
+    <div class="field">
+      <label>Hold Period (years)</label>
+      <input type="number" id="hold-years" value="10" min="1" step="1">
+      <div class="hint">Show how value and cash flow change over time.</div>
+    </div>
+    <div class="field">
+      <label>Annual Rent Growth (%)</label>
+      <input type="number" id="rent-growth" value="3" step="0.25">
+    </div>
+    <div class="field">
+      <label>Annual Expense Growth (%)</label>
+      <input type="number" id="expense-growth" value="3" step="0.25">
+    </div>
+    <div class="field">
+      <label>Annual Property Appreciation (%)</label>
+      <input type="number" id="appreciation" value="3" step="0.25">
+    </div>
+  </div>
+
   <h2>Repairs &amp; Rehab</h2>
   <div class="repair-grid">
     <div class="repair-row"><label>Roof</label><input type="number" id="r-roof" value="0"></div>
@@ -315,6 +340,10 @@ function runAnalysis() {
   const capexPerUnit = +document.getElementById('capex').value;
   const closingExact = +document.getElementById('closing-exact').value;
   const closingPct   = +document.getElementById('closing-pct').value / 100;
+  const holdYears      = Math.max(1, +document.getElementById('hold-years').value);
+  const rentGrowth     = +document.getElementById('rent-growth').value / 100;
+  const expenseGrowth  = +document.getElementById('expense-growth').value / 100;
+  const appreciation   = +document.getElementById('appreciation').value / 100;
   const contingencyPct = +document.getElementById('contingency').value / 100;
   const repairFunding  = document.getElementById('repair-funding').value;
   const rehabVacMo     = +document.getElementById('rehab-vac').value;
@@ -378,6 +407,21 @@ function runAnalysis() {
   const capexAnnual     = capexPerUnit * numUnits * 12;
   const monthlyCFCapex  = (annualCashflow - capexAnnual) / 12;
   const cfPerDoorCapex  = monthlyCFCapex / numUnits;
+
+  const monthlyRate = rate / 12;
+  const totalMonths = term * 12;
+  function remainingLoanBalance(years) {
+    let balance = loanAmount;
+    const months = Math.min(years * 12, totalMonths);
+    for (let m = 1; m <= months; m++) {
+      balance = balance * (1 + monthlyRate) - monthlyPI;
+    }
+    return Math.max(balance, 0);
+  }
+
+  function projectValue(base, growth, years) {
+    return base * Math.pow(1 + growth, years);
+  }
 
   const capRateCurrent = price > 0 ? (noiCurrent / price) * 100 : 0;
   const capRateMarket  = price > 0 ? (noiMarket  / price) * 100 : 0;
@@ -575,6 +619,39 @@ function runAnalysis() {
         <p class="cash-in-legend">* Purple highlighted values = components of Total Cash Invested (down payment + closing costs + repairs + rehab vacancy)</p>
         <div class="overall-box ${overallClass}">${overallLabel} &mdash; ${overallNote}</div>
       </div>
+    </div>
+
+    <div class="card full">
+      <h2>Breakdown Over Time</h2>
+      <div class="table-scroll">
+        <table class="breakdown-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Property Value</th>
+              <th>Remaining Loan</th>
+              <th>Equity</th>
+              <th>Gross Rent</th>
+              <th>NOI</th>
+              <th>Annual Cash Flow</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${Array.from({length: holdYears}, (_, idx) => {
+              const year = idx + 1;
+              const value = projectValue(price, appreciation, year);
+              const gross = projectValue(grossCurrent, rentGrowth, year);
+              const expense = projectValue(totalExpenses, expenseGrowth, year);
+              const noi  = gross - expense;
+              const balance = remainingLoanBalance(year);
+              const equity  = value - balance;
+              const cashFlow = noi - annualDebtSvc;
+              return `<tr><td>${year}</td><td>$${fmt(value)}</td><td>$${fmt(balance)}</td><td>$${fmt(equity)}</td><td>$${fmt(gross)}</td><td>$${fmt(noi)}</td><td>$${fmt(cashFlow)}</td></tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+      <p class="upside-note">Projections assume constant debt service and annual growth rates entered above. Use longer hold periods to evaluate long-term equity build and property appreciation.</p>
     </div>
 
     <div class="notes">
