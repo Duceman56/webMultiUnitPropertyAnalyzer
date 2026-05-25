@@ -70,16 +70,17 @@
   .cash-in-total td { background: #f0d9f7; font-weight: 700; border-top: 2px solid #7b2d8b; }
   .cash-in-legend { margin-top: 10px; font-size: 12px; color: #7b2d8b; background: #f9f0fc; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #7b2d8b; }
   .table-scroll { overflow-x: hidden; margin-top: 8px; max-width: 100%; }
-  .breakdown-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 12px; line-height: 1.2; }
-  .breakdown-table th, .breakdown-table td { padding: 5px 5px; border-bottom: 1px solid #eee; word-break: break-word; white-space: normal; overflow: hidden; text-overflow: ellipsis; }
+  .breakdown-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 13px; line-height: 1.3; }
+  .breakdown-table th, .breakdown-table td { padding: 6px 6px; border-bottom: 1px solid #eee; word-break: break-word; white-space: normal; overflow: hidden; text-overflow: ellipsis; }
   .breakdown-table th { background: #f8f9fb; text-align: left; color: #444; }
   .breakdown-table th:nth-child(1), .breakdown-table td:nth-child(1) { width: 6%; }
-  .breakdown-table th:nth-child(2), .breakdown-table td:nth-child(2) { width: 15%; }
-  .breakdown-table th:nth-child(3), .breakdown-table td:nth-child(3) { width: 15%; }
-  .breakdown-table th:nth-child(4), .breakdown-table td:nth-child(4) { width: 15%; }
-  .breakdown-table th:nth-child(5), .breakdown-table td:nth-child(5) { width: 15%; }
-  .breakdown-table th:nth-child(6), .breakdown-table td:nth-child(6) { width: 17%; }
-  .breakdown-table th:nth-child(7), .breakdown-table td:nth-child(7) { width: 17%; }
+  .breakdown-table th:nth-child(2), .breakdown-table td:nth-child(2) { width: 14%; }
+  .breakdown-table th:nth-child(3), .breakdown-table td:nth-child(3) { width: 11%; }
+  .breakdown-table th:nth-child(4), .breakdown-table td:nth-child(4) { width: 11%; }
+  .breakdown-table th:nth-child(5), .breakdown-table td:nth-child(5) { width: 11%; }
+  .breakdown-table th:nth-child(6), .breakdown-table td:nth-child(6) { width: 12%; }
+  .breakdown-table th:nth-child(7), .breakdown-table td:nth-child(7) { width: 12%; }
+  .breakdown-table th:nth-child(8), .breakdown-table td:nth-child(8) { width: 13%; }
   .notes { margin-top: 16px; font-size: 12px; color: #888; background: #fff; border-radius: 8px; padding: 16px 20px; line-height: 1.8; }
   .header-bar { background: #1a1a2e; color: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
   .header-bar h1 { font-size: 22px; color: #fff; margin-bottom: 4px; }
@@ -232,7 +233,7 @@
   <div class="form-grid" style="margin-bottom:12px;">
     <div class="field">
       <label>Hold Period (years)</label>
-      <input type="number" id="hold-years" value="10" min="1" step="1">
+      <input type="number" id="hold-years" value="20" min="1" step="1">
       <div class="hint">Show how value and cash flow change over time.</div>
     </div>
     <div class="field">
@@ -418,6 +419,7 @@ function runAnalysis() {
 
   const monthlyRate = rate / 12;
   const totalMonths = term * 12;
+  const sellCostPct = 0.08;
   function remainingLoanBalance(years) {
     let balance = loanAmount;
     const months = Math.min(years * 12, totalMonths);
@@ -429,6 +431,24 @@ function runAnalysis() {
 
   function projectValue(base, growth, years) {
     return base * Math.pow(1 + growth, years);
+  }
+
+  function irr(cashFlows) {
+    const npv = (rate) => cashFlows.reduce((sum, cf, idx) => sum + cf / Math.pow(1 + rate, idx), 0);
+    let low = -0.9999;
+    let high = 1.0;
+    let npvLow = npv(low);
+    let npvHigh = npv(high);
+    if (npvLow === 0) return low;
+    if (npvHigh === 0) return high;
+    if (npvLow * npvHigh > 0) return 0;
+    for (let i = 0; i < 80; i++) {
+      const mid = (low + high) / 2;
+      const npvMid = npv(mid);
+      if (npvMid > 0) low = mid;
+      else high = mid;
+    }
+    return (low + high) / 2;
   }
 
   const capRateCurrent = price > 0 ? (noiCurrent / price) * 100 : 0;
@@ -635,13 +655,14 @@ function runAnalysis() {
         <table class="breakdown-table">
           <thead>
             <tr>
-              <th>Yr</th>
-              <th>Value</th>
-              <th>Loan</th>
-              <th>Equity</th>
-              <th>Gross</th>
-              <th>NOI</th>
+              <th>Year</th>
+              <th>Annual Income</th>
+              <th>Mortgage</th>
+              <th>Expenses</th>
               <th>Cash Flow</th>
+              <th>Cash on Cash Return</th>
+              <th>Equity Accumulated</th>
+              <th>Cash to Receive if Sold at Year End</th>
             </tr>
           </thead>
           <tbody>
@@ -654,7 +675,10 @@ function runAnalysis() {
               const balance = remainingLoanBalance(year);
               const equity  = value - balance;
               const cashFlow = noi - annualDebtSvc;
-              return `<tr><td>${year}</td><td>$${fmt(value)}</td><td>$${fmt(balance)}</td><td>$${fmt(equity)}</td><td>$${fmt(gross)}</td><td>$${fmt(noi)}</td><td>$${fmt(cashFlow)}</td></tr>`;
+              const saleCost = value * sellCostPct;
+              const cashToReceive = value - balance - saleCost;
+              const cashOnCash = totalCashInvested > 0 ? (cashFlow / totalCashInvested) * 100 : 0;
+              return `<tr><td>${year}</td><td>$${fmt(gross)}</td><td>$${fmt(balance)}</td><td>$${fmt(expense)}</td><td>$${fmt(cashFlow)}</td><td>${fmtP(cashOnCash)}</td><td>$${fmt(equity)}</td><td>$${fmt(cashToReceive)}</td></tr>`;
             }).join('')}
           </tbody>
         </table>
