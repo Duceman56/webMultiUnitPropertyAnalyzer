@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multifamily Property Analyzer — Eau Claire / Chippewa Valley</title>
+<title>Multifamily Property Analyzer — Chippewa Valley &amp; Western WI</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { overflow-x: hidden; }
@@ -11,140 +11,137 @@
   .page-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; letter-spacing: 0.02em; }
 
   /* ── INPUT FORM ── */
-  .form-wrap { max-width: 860px; margin: 0 auto 32px; background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .form-wrap { max-width: 900px; margin: 0 auto 32px; background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
   .form-wrap h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 14px; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-top: 20px; }
   .form-wrap h2:first-of-type { margin-top: 0; }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px 20px; margin-bottom: 4px; }
-  .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; margin-bottom: 4px; }
+  .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
   .field label { display: block; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
   .field input, .field select { width: 100%; padding: 6px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; font-family: Arial, sans-serif; color: #222; background: #fafafa; }
   .field input:focus, .field select:focus { outline: none; border-color: #1a1a2e; background: #fff; }
   .field .hint { font-size: 11px; color: #aaa; margin-top: 3px; }
-
-  /* repair items */
   .repair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-bottom: 14px; }
   .repair-row { display: flex; align-items: center; gap: 8px; }
   .repair-row label { font-size: 12px; color: #555; flex: 1; }
   .repair-row input { width: 110px; padding: 4px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; text-align: right; flex-shrink: 0; }
-
-  /* unit rents */
-  .unit-rent-grid { display: grid; gap: 10px; margin-bottom: 8px; }
-
-  /* buttons */
   .btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
   .btn-primary { padding: 10px 28px; background: #1a1a2e; color: #fff; border: none; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 0.03em; font-family: Arial, sans-serif; }
   .btn-primary:hover { background: #2d2d50; }
   .btn-secondary { padding: 10px 20px; background: transparent; color: #888; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: Arial, sans-serif; }
   .btn-secondary:hover { border-color: #888; color: #333; }
 
-  /* ── REPORT (matches R output exactly) ── */
-  .container { max-width: 860px; margin: 0 auto; overflow-x: hidden; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 0; }
-  .card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 0; }
+  /* ── REPORT ── */
+  .container { max-width: 900px; margin: 0 auto; overflow-x: hidden; }
+  .card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
   .card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
-  .card.full { grid-column: 1 / -1; }
-  .grid-gap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  td { padding: 6px 4px; }
-  td:last-child { text-align: right; font-weight: 500; }
-  tr.subtotal td { border-top: 1px solid #ddd; font-weight: 700; padding-top: 8px; }
-  .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .metric-box { background: #f8f9fb; border-radius: 6px; padding: 12px; text-align: center; }
-  .metric-box .label { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 4px; }
-  .metric-box .value { font-size: 20px; font-weight: 700; color: #1a1a2e; }
-  .metric-box .sub { font-size: 11px; color: #aaa; margin-top: 2px; }
-  .verdict-table td { padding: 8px 6px; }
-  tr.pass td:last-child { color: #1a7f3c; font-weight: 700; }
-  tr.ok  td:last-child { color: #b07d00; font-weight: 700; }
-  tr.fail td:last-child { color: #c0392b; font-weight: 700; }
-  tr.pass { border-left: 4px solid #1a7f3c; }
-  tr.ok   { border-left: 4px solid #f0a500; }
-  tr.fail { border-left: 4px solid #c0392b; }
-  .overall-box { margin-top: 16px; padding: 16px 20px; border-radius: 8px; font-size: 16px; font-weight: 700; text-align: center; }
-  .overall-pass { background: #e6f4ec; color: #1a7f3c; }
-  .overall-ok   { background: #fef8e7; color: #b07d00; }
-  .overall-fail { background: #fdecea; color: #c0392b; }
-  .upside-note { margin-top: 10px; font-size: 13px; color: #2471a3; background: #eaf4fb; padding: 8px 12px; border-radius: 6px; }
-  .cash-in { color: #7b2d8b; font-weight: 700; }
-  .cash-in-row td { background: #f9f0fc; }
-  .cash-in-total td { background: #f0d9f7; font-weight: 700; border-top: 2px solid #7b2d8b; }
-  .cash-in-legend { margin-top: 10px; font-size: 12px; color: #7b2d8b; background: #f9f0fc; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #7b2d8b; }
-  .table-scroll { overflow-x: hidden; margin-top: 8px; max-width: 100%; }
-  .breakdown-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 13px; line-height: 1.3; }
-  .breakdown-table th, .breakdown-table td { padding: 6px 6px; border-bottom: 1px solid #eee; word-break: break-word; white-space: normal; overflow: hidden; text-overflow: ellipsis; }
-  .breakdown-table th { background: #f8f9fb; text-align: left; color: #444; }
-  .breakdown-table th:nth-child(1), .breakdown-table td:nth-child(1) { width: 6%; }
-  .breakdown-table th:nth-child(2), .breakdown-table td:nth-child(2) { width: 14%; }
-  .breakdown-table th:nth-child(3), .breakdown-table td:nth-child(3) { width: 11%; }
-  .breakdown-table th:nth-child(4), .breakdown-table td:nth-child(4) { width: 11%; }
-  .breakdown-table th:nth-child(5), .breakdown-table td:nth-child(5) { width: 11%; }
-  .breakdown-table th:nth-child(6), .breakdown-table td:nth-child(6) { width: 12%; }
-  .breakdown-table th:nth-child(7), .breakdown-table td:nth-child(7) { width: 12%; }
-  .breakdown-table th:nth-child(8), .breakdown-table td:nth-child(8) { width: 13%; }
-  .notes { margin-top: 16px; font-size: 12px; color: #888; background: #fff; border-radius: 8px; padding: 16px 20px; line-height: 1.8; }
   .header-bar { background: #1a1a2e; color: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
   .header-bar h1 { font-size: 22px; color: #fff; margin-bottom: 4px; }
   .header-bar .subtitle { font-size: 14px; color: #aab; }
   .header-meta { display: flex; gap: 24px; margin-top: 12px; font-size: 13px; color: #ccd; flex-wrap: wrap; }
   .header-meta span strong { color: #fff; }
 
+  /* Single-column financing table */
+  .finance-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .finance-table td { padding: 7px 8px; border-bottom: 1px solid #f0f0f0; }
+  .finance-table tr:last-child td { border-bottom: none; }
+  .finance-table .row-label { color: #555; width: 60%; }
+  .finance-table .row-value { text-align: right; font-weight: 500; color: #222; }
+  .finance-table tr.subtotal td { font-weight: 700; border-top: 1px solid #ddd; padding-top: 9px; }
+  .finance-table tr.section-head td { background: #f8f9fb; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; padding: 6px 8px; font-weight: 700; }
+  .ci-row .row-label  { background: #f9f0fc; color: #7b2d8b; }
+  .ci-row .row-value  { background: #f9f0fc; color: #7b2d8b; }
+  .ci-total .row-label { background: #f0d9f7; color: #7b2d8b; font-weight: 700; border-top: 2px solid #7b2d8b; }
+  .ci-total .row-value { background: #f0d9f7; color: #7b2d8b; font-weight: 700; border-top: 2px solid #7b2d8b; text-align: right; }
+  .ci-legend { margin-top: 10px; font-size: 12px; color: #7b2d8b; background: #f9f0fc; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #7b2d8b; }
+
+  /* Side-by-side compare table (income/expenses only) */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .compare-table td { padding: 7px 8px; border-bottom: 1px solid #f0f0f0; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table .row-label { color: #555; width: 200px; }
+  .compare-table .val-current { background: #f0f8ff; text-align: right; font-weight: 500; color: #222; }
+  .compare-table .val-market  { background: #f0faf6; text-align: right; font-weight: 500; color: #222; }
+  .compare-table tr.subtotal td { font-weight: 700; border-top: 1px solid #ddd; padding-top: 9px; }
+  .compare-table tr.section-head td { background: #f8f9fb; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; padding: 6px 8px; font-weight: 700; }
+  .compare-table tr.highlight-row .val-current,
+  .compare-table tr.highlight-row .val-market { font-size: 14px; color: #1a7f3c; }
+
+  /* Key metrics grid */
+  .metrics-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 0; }
+  .metrics-col-label { font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+  .metrics-col-label.current { color: #0c447c; }
+  .metrics-col-label.market  { color: #085041; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .metric-box { border-radius: 6px; padding: 12px; text-align: center; }
+  .metric-box.current { background: #eaf4fb; }
+  .metric-box.market  { background: #e8f6ef; }
+  .metric-box .label { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 4px; }
+  .metric-box.current .value { font-size: 20px; font-weight: 700; color: #0c447c; }
+  .metric-box.market  .value { font-size: 20px; font-weight: 700; color: #085041; }
+  .metric-box .sub { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+  /* Verdict */
+  .verdict-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .verdict-col { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
+  .verdict-col-header { padding: 10px 14px; font-size: 13px; font-weight: 700; }
+  .verdict-col-header.current { background: #eaf4fb; color: #0c447c; }
+  .verdict-col-header.market  { background: #e8f6ef; color: #085041; }
+  .verdict-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .verdict-table td { padding: 8px 10px; border-top: 1px solid #f0f0f0; }
+  .verdict-table td:last-child { text-align: right; font-weight: 700; }
+  tr.pass { border-left: 4px solid #1a7f3c; }
+  tr.ok   { border-left: 4px solid #f0a500; }
+  tr.fail { border-left: 4px solid #c0392b; }
+  tr.pass td:last-child { color: #1a7f3c; }
+  tr.ok   td:last-child { color: #b07d00; }
+  tr.fail td:last-child { color: #c0392b; }
+  .overall-box { margin: 12px; padding: 12px 16px; border-radius: 6px; font-size: 14px; font-weight: 700; text-align: center; }
+  .overall-pass { background: #e6f4ec; color: #1a7f3c; }
+  .overall-ok   { background: #fef8e7; color: #b07d00; }
+  .overall-fail { background: #fdecea; color: #c0392b; }
+
+  /* Upside note */
+  .upside-note { margin-top: 10px; font-size: 13px; color: #2471a3; background: #eaf4fb; padding: 8px 12px; border-radius: 6px; }
+
+  /* Projection table */
+  .table-scroll { overflow-x: auto; margin-top: 8px; }
+  .breakdown-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .breakdown-table th, .breakdown-table td { padding: 6px 7px; border-bottom: 1px solid #eee; white-space: nowrap; }
+  .breakdown-table th { background: #f8f9fb; text-align: left; color: #555; font-size: 11px; }
+  .breakdown-table td { text-align: right; }
+  .breakdown-table td:first-child { text-align: left; color: #888; }
+  .breakdown-table th.c-head { background: #eaf4fb; color: #0c447c; text-align: right; }
+  .breakdown-table th.m-head { background: #e8f6ef; color: #085041; text-align: right; }
+  .breakdown-table td.c-cell { background: #f5fafd; color: #0c447c; }
+  .breakdown-table td.m-cell { background: #f0faf6; color: #085041; }
+
+  .notes { margin-top: 16px; font-size: 12px; color: #888; background: #fff; border-radius: 8px; padding: 16px 20px; line-height: 1.8; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
   #report { display: none; margin-top: 32px; }
-  .placeholder { max-width: 860px; margin: 0 auto; padding: 40px; text-align: center; color: #aaa; font-size: 14px; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .placeholder { max-width: 900px; margin: 0 auto; padding: 40px; text-align: center; color: #aaa; font-size: 14px; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
 
   @media print {
-    /* Force background colors to print */
-    * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-    /* Hide everything except the report */
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     .form-wrap, .btn-row, .page-title, .placeholder { display: none !important; }
     #report { display: block !important; margin-top: 0; }
-    body { background: white !important; padding: 0; margin: 0; }
-    /* Keep two-column grid on paper */
-    .grid-gap { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
-    .metrics-grid { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; }
-    /* Prevent cards from breaking across pages awkwardly */
+    body { background: white !important; padding: 0; }
     .card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ddd !important; }
-    .card.full { break-inside: avoid; page-break-inside: avoid; }
-    /* Keep header bar dark */
-    .header-bar { background: #1a1a2e !important; color: #fff !important; }
-    .header-bar h1 { color: #fff !important; }
+    .header-bar { background: #1a1a2e !important; }
+    .header-bar h1, .header-bar span strong { color: #fff !important; }
     .header-bar .subtitle { color: #aab !important; }
     .header-meta { color: #ccd !important; }
-    .header-meta span strong { color: #fff !important; }
-    /* Purple cash rows */
-    .cash-in { color: #7b2d8b !important; }
-    .cash-in-row td { background: #f9f0fc !important; }
-    .cash-in-total td { background: #f0d9f7 !important; border-top: 2px solid #7b2d8b !important; }
-    .cash-in-legend { background: #f9f0fc !important; color: #7b2d8b !important; border-left: 4px solid #7b2d8b !important; }
-    /* Metric boxes */
-    .metric-box { background: #f8f9fb !important; }
-    /* Verdict colors */
-    tr.pass { border-left: 4px solid #1a7f3c !important; }
-    tr.ok   { border-left: 4px solid #f0a500 !important; }
-    tr.fail { border-left: 4px solid #c0392b !important; }
-    tr.pass td:last-child { color: #1a7f3c !important; }
-    tr.ok  td:last-child  { color: #b07d00 !important; }
-    tr.fail td:last-child { color: #c0392b !important; }
-    .overall-pass { background: #e6f4ec !important; color: #1a7f3c !important; }
-    .overall-ok   { background: #fef8e7 !important; color: #b07d00 !important; }
-    .overall-fail { background: #fdecea !important; color: #c0392b !important; }
-    .upside-note  { background: #eaf4fb !important; color: #2471a3 !important; }
-    .container { max-width: 100% !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="page-title">Multifamily Property Analyzer — Eau Claire / Chippewa Valley Market</div>
+<div class="page-title">Multifamily Property Analyzer — Chippewa Valley &amp; Western WI Market</div>
 
-<!-- ══ INPUT FORM ══ -->
 <div class="form-wrap">
 
   <h2>Property Info</h2>
   <div class="form-grid" style="margin-bottom:12px;">
-    <div class="field" style="grid-column: 1 / -1;">
+    <div class="field" style="grid-column:1/-1;">
       <label>Property Address</label>
       <input type="text" id="address" value="123 Example St, Eau Claire, WI">
     </div>
@@ -234,7 +231,6 @@
     <div class="field">
       <label>Hold Period (years)</label>
       <input type="number" id="hold-years" value="20" min="1" step="1">
-      <div class="hint">Show how value and cash flow change over time.</div>
     </div>
     <div class="field">
       <label>Annual Rent Growth (%)</label>
@@ -286,25 +282,23 @@
   </div>
 
   <div class="btn-row">
-    <button class="btn-primary" onclick="runAnalysis()">▶ Run Analysis</button>
-    <button class="btn-secondary" onclick="window.print()">🖨 Print / Save PDF</button>
+    <button class="btn-primary" onclick="runAnalysis()">&#9654; Run Analysis</button>
+    <button class="btn-secondary" onclick="window.print()">&#128424; Print / Save PDF</button>
     <button class="btn-secondary" onclick="location.reload()">Reset</button>
   </div>
 </div>
 
 <div class="placeholder" id="placeholder">Fill in the inputs above and click <strong>Run Analysis</strong> to generate the report.</div>
-
 <div id="report"></div>
 
 <script>
 const fmt  = n => Math.round(n).toLocaleString('en-US');
-const fmt2 = n => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmt2 = n => n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
 const fmtP = (n, d=2) => n.toFixed(d) + '%';
 
 function pmt(rate, nper, pv) {
   if (rate === 0) return pv / (nper * 12);
-  const r = rate / 12;
-  const N = nper * 12;
+  const r = rate / 12, N = nper * 12;
   return pv * r * Math.pow(1+r, N) / (Math.pow(1+r, N) - 1);
 }
 
@@ -313,7 +307,6 @@ function buildUnitFields() {
   const cols = `repeat(${n}, 1fr)`;
   let html = '';
 
-  // Current rents
   html += `<div style="display:grid;grid-template-columns:${cols};gap:10px;margin-bottom:4px;">`;
   for (let i = 0; i < n; i++) html += `<div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.05em;text-align:center;">Unit ${i+1} Current ($)</div>`;
   html += '</div>';
@@ -321,7 +314,6 @@ function buildUnitFields() {
   for (let i = 0; i < n; i++) html += `<input type="number" id="cur-${i}" value="900" style="padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:13px;text-align:right;width:100%;">`;
   html += '</div>';
 
-  // Market rents
   html += `<div style="display:grid;grid-template-columns:${cols};gap:10px;margin-bottom:4px;">`;
   for (let i = 0; i < n; i++) html += `<div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.05em;text-align:center;">Unit ${i+1} Market ($)</div>`;
   html += '</div>';
@@ -330,6 +322,43 @@ function buildUnitFields() {
   html += '</div>';
 
   document.getElementById('unit-fields').innerHTML = html;
+}
+
+function calcScenario(gross, annualDebtSvc, vacancyRate, maintPct, mgmtPct, taxes, insurance, utilityAnnual, price) {
+  const vacancyLoss = gross * vacancyRate;
+  const maintenance = gross * maintPct;
+  const mgmtCost    = gross * mgmtPct;
+  const totalExpenses = vacancyLoss + maintenance + mgmtCost + taxes + insurance + utilityAnnual;
+  const noi = gross - totalExpenses;
+  const annualCashflow = noi - annualDebtSvc;
+  const capRate = price > 0 ? (noi / price) * 100 : 0;
+  const dscr    = annualDebtSvc > 0 ? noi / annualDebtSvc : 0;
+  return { gross, vacancyLoss, maintenance, mgmtCost, totalExpenses, noi, annualCashflow, capRate, dscr };
+}
+
+function verdictRows(cfDoor, capRate, dscr, coc) {
+  let flags = 0, html = '';
+
+  function row(label, val, fmt, thPass, thOk, passLbl, okLbl, failLbl) {
+    let cls, lbl;
+    if (val >= thPass)      { cls = 'pass'; lbl = passLbl; }
+    else if (val >= thOk)   { cls = 'ok';   lbl = okLbl;   }
+    else                    { cls = 'fail';  lbl = failLbl; flags++; }
+    return `<tr class="${cls}"><td>${label}</td><td>${fmt(val)}</td><td>${lbl}</td></tr>`;
+  }
+
+  html += row('Cash Flow / Door', cfDoor, v => `$${fmt2(v)}/mo`, 200, 100, 'PASS — Strong', 'OK — Acceptable', 'FAIL — Too thin');
+  html += row('Cap Rate', capRate, v => fmtP(v), 7, 5.5, 'PASS — Strong', 'OK — Acceptable', 'FAIL — Below threshold');
+  html += row('Debt Service Coverage', dscr, v => v.toFixed(2)+'x', 1.25, 1.0, 'PASS — Lender-friendly', 'OK — Barely covers', 'FAIL — Does not cover debt');
+  html += row('Cash-on-Cash Return', coc, v => fmtP(v), 6, 4, 'PASS — Good return', 'OK — Marginal', 'FAIL — Poor return');
+
+  let ovLabel, ovClass, ovNote;
+  if      (flags === 0) { ovLabel = 'STRONG DEAL';           ovClass = 'overall-pass'; ovNote = 'All metrics pass.'; }
+  else if (flags === 1) { ovLabel = 'PROCEED WITH CAUTION';  ovClass = 'overall-ok';   ovNote = 'One metric below threshold.'; }
+  else if (flags === 2) { ovLabel = 'WEAK DEAL';             ovClass = 'overall-fail'; ovNote = 'Negotiate price down or walk.'; }
+  else                  { ovLabel = 'PASS ON THIS PROPERTY'; ovClass = 'overall-fail'; ovNote = 'Multiple red flags.'; }
+
+  return { html, ovLabel, ovClass, ovNote };
 }
 
 function runAnalysis() {
@@ -349,10 +378,10 @@ function runAnalysis() {
   const capexPerUnit = +document.getElementById('capex').value;
   const closingExact = +document.getElementById('closing-exact').value;
   const closingPct   = +document.getElementById('closing-pct').value / 100;
-  const holdYears      = Math.max(1, +document.getElementById('hold-years').value);
-  const rentGrowth     = +document.getElementById('rent-growth').value / 100;
-  const expenseGrowth  = +document.getElementById('expense-growth').value / 100;
-  const appreciation   = +document.getElementById('appreciation').value / 100;
+  const holdYears    = Math.max(1, +document.getElementById('hold-years').value);
+  const rentGrowth   = +document.getElementById('rent-growth').value / 100;
+  const expGrowth    = +document.getElementById('expense-growth').value / 100;
+  const appreciation = +document.getElementById('appreciation').value / 100;
   const contingencyPct = +document.getElementById('contingency').value / 100;
   const repairFunding  = document.getElementById('repair-funding').value;
   const rehabVacMo     = +document.getElementById('rehab-vac').value;
@@ -360,7 +389,7 @@ function runAnalysis() {
   let currentRents = [], marketRents = [];
   for (let i = 0; i < numUnits; i++) {
     currentRents.push(+document.getElementById(`cur-${i}`).value || 0);
-    marketRents.push(+document.getElementById(`mkt-${i}`).value || 0);
+    marketRents.push(+document.getElementById(`mkt-${i}`).value  || 0);
   }
 
   const repairItems = {
@@ -380,10 +409,10 @@ function runAnalysis() {
     'Other Repairs':     +document.getElementById('r-other').value,
   };
 
-  const totalRepairsBase = Object.values(repairItems).reduce((a,b)=>a+b,0);
+  const totalRepairsBase = Object.values(repairItems).reduce((a,b) => a+b, 0);
   const rehabContingency = totalRepairsBase * contingencyPct;
   const totalRepairs     = totalRepairsBase + rehabContingency;
-  const rehabVacCost     = currentRents.reduce((a,b)=>a+b,0) * rehabVacMo;
+  const rehabVacCost     = currentRents.reduce((a,b) => a+b, 0) * rehabVacMo;
 
   const downPayment = price * downPct;
   let loanAmount    = price - downPayment;
@@ -393,311 +422,236 @@ function runAnalysis() {
   const annualDebtSvc = monthlyPI * 12;
   const closingCosts  = closingExact > 0 ? closingExact : price * closingPct;
   const monthlyPITI   = monthlyPI + escrow;
+  const capexAnnual   = capexPerUnit * numUnits * 12;
+  const utilityAnnual = utilities * 12;
 
   let totalCashInvested = downPayment + closingCosts + rehabVacCost;
   if (repairFunding === 'cash') totalCashInvested += totalRepairs;
 
-  const grossCurrent = currentRents.reduce((a,b)=>a+b,0) * 12;
-  const grossMarket  = marketRents.reduce((a,b)=>a+b,0) * 12;
+  const grossCurrent = currentRents.reduce((a,b) => a+b, 0) * 12;
+  const grossMarket  = marketRents.reduce((a,b) => a+b, 0)  * 12;
   const rentUpside   = grossMarket - grossCurrent;
 
-  const vacancyLoss   = grossCurrent * vacancyRate;
-  const maintenance   = grossCurrent * maintPct;
-  const mgmtCost      = grossCurrent * mgmtPct;
-  const utilityAnnual = utilities * 12;
-  const totalExpenses = vacancyLoss + maintenance + mgmtCost + taxes + insurance + utilityAnnual;
+  const C = calcScenario(grossCurrent, annualDebtSvc, vacancyRate, maintPct, mgmtPct, taxes, insurance, utilityAnnual, price);
+  const M = calcScenario(grossMarket,  annualDebtSvc, vacancyRate, maintPct, mgmtPct, taxes, insurance, utilityAnnual, price);
 
-  const noiCurrent = grossCurrent - totalExpenses;
-  const noiMarket  = grossMarket - (grossMarket * vacancyRate) - (grossMarket * (maintPct + mgmtPct)) - taxes - insurance - utilityAnnual;
+  const cocC = totalCashInvested > 0 ? (C.annualCashflow / totalCashInvested) * 100 : 0;
+  const cocM = totalCashInvested > 0 ? (M.annualCashflow / totalCashInvested) * 100 : 0;
+  const grmC = grossCurrent > 0 ? price / grossCurrent : 0;
+  const grmM = grossMarket  > 0 ? price / grossMarket  : 0;
+  const cfDoorC = C.annualCashflow / numUnits / 12;
+  const cfDoorM = M.annualCashflow / numUnits / 12;
+  const cfDoorCapexC = (C.annualCashflow - capexAnnual) / numUnits / 12;
+  const cfDoorCapexM = (M.annualCashflow - capexAnnual) / numUnits / 12;
+  const expRatioC = grossCurrent > 0 ? (C.totalExpenses / grossCurrent) * 100 : 0;
+  const expRatioM = grossMarket  > 0 ? (M.totalExpenses / grossMarket)  * 100 : 0;
 
-  const annualCashflow  = noiCurrent - annualDebtSvc;
-  const monthlyCashflow = annualCashflow / 12;
-  const cashflowPerDoor = monthlyCashflow / numUnits;
-  const capexAnnual     = capexPerUnit * numUnits * 12;
-  const monthlyCFCapex  = (annualCashflow - capexAnnual) / 12;
-  const cfPerDoorCapex  = monthlyCFCapex / numUnits;
+  const vC = verdictRows(cfDoorC, C.capRate, C.dscr, cocC);
+  const vM = verdictRows(cfDoorM, M.capRate, M.dscr, cocM);
 
-  const monthlyRate = rate / 12;
-  const totalMonths = term * 12;
-  const sellCostPct = 0.08;
-  function remainingLoanBalance(years) {
-    let balance = loanAmount;
-    const months = Math.min(years * 12, totalMonths);
-    for (let m = 1; m <= months; m++) {
-      balance = balance * (1 + monthlyRate) - monthlyPI;
-    }
-    return Math.max(balance, 0);
-  }
-
-  function projectValue(base, growth, years) {
-    return base * Math.pow(1 + growth, years);
-  }
-
-  function irr(cashFlows) {
-    const npv = (rate) => cashFlows.reduce((sum, cf, idx) => sum + cf / Math.pow(1 + rate, idx), 0);
-    let low = -0.9999;
-    let high = 1.0;
-    let npvLow = npv(low);
-    let npvHigh = npv(high);
-    if (npvLow === 0) return low;
-    if (npvHigh === 0) return high;
-    if (npvLow * npvHigh > 0) return 0;
-    for (let i = 0; i < 80; i++) {
-      const mid = (low + high) / 2;
-      const npvMid = npv(mid);
-      if (npvMid > 0) low = mid;
-      else high = mid;
-    }
-    return (low + high) / 2;
-  }
-
-  const capRateCurrent = price > 0 ? (noiCurrent / price) * 100 : 0;
-  const capRateMarket  = price > 0 ? (noiMarket  / price) * 100 : 0;
-  const coc            = totalCashInvested > 0 ? (annualCashflow / totalCashInvested) * 100 : 0;
-  const grm            = grossCurrent > 0 ? price / grossCurrent : 0;
-  const dscr           = annualDebtSvc > 0 ? noiCurrent / annualDebtSvc : 0;
-  const expenseRatio   = grossCurrent > 0 ? (totalExpenses / grossCurrent) * 100 : 0;
-
-  // Verdict
-  let flags = 0, verdictRows = '';
-
-  if (cashflowPerDoor >= 200) {
-    verdictRows += `<tr class="pass"><td>Cash Flow / Door</td><td>$${fmt2(cashflowPerDoor)}/mo</td><td>PASS — Strong</td></tr>`;
-  } else if (cashflowPerDoor >= 100) {
-    verdictRows += `<tr class="ok"><td>Cash Flow / Door</td><td>$${fmt2(cashflowPerDoor)}/mo</td><td>OK — Acceptable</td></tr>`;
-  } else {
-    verdictRows += `<tr class="fail"><td>Cash Flow / Door</td><td>$${fmt2(cashflowPerDoor)}/mo</td><td>FAIL — Too thin or negative</td></tr>`;
-    flags++;
-  }
-
-  if (capRateCurrent >= 7) {
-    verdictRows += `<tr class="pass"><td>Cap Rate (current)</td><td>${fmtP(capRateCurrent)}</td><td>PASS — Strong for EC market</td></tr>`;
-  } else if (capRateCurrent >= 5.5) {
-    verdictRows += `<tr class="ok"><td>Cap Rate (current)</td><td>${fmtP(capRateCurrent)}</td><td>OK — Acceptable</td></tr>`;
-  } else {
-    verdictRows += `<tr class="fail"><td>Cap Rate (current)</td><td>${fmtP(capRateCurrent)}</td><td>FAIL — Below market threshold</td></tr>`;
-    flags++;
-  }
-
-  if (dscr >= 1.25) {
-    verdictRows += `<tr class="pass"><td>Debt Service Coverage</td><td>${dscr.toFixed(2)}x</td><td>PASS — Lender-friendly</td></tr>`;
-  } else if (dscr >= 1.0) {
-    verdictRows += `<tr class="ok"><td>Debt Service Coverage</td><td>${dscr.toFixed(2)}x</td><td>OK — Barely covers debt</td></tr>`;
-  } else {
-    verdictRows += `<tr class="fail"><td>Debt Service Coverage</td><td>${dscr.toFixed(2)}x</td><td>FAIL — Does not cover debt service</td></tr>`;
-    flags++;
-  }
-
-  if (coc >= 6) {
-    verdictRows += `<tr class="pass"><td>Cash-on-Cash Return</td><td>${fmtP(coc)}</td><td>PASS — Good return on equity</td></tr>`;
-  } else if (coc >= 4) {
-    verdictRows += `<tr class="ok"><td>Cash-on-Cash Return</td><td>${fmtP(coc)}</td><td>OK — Marginal</td></tr>`;
-  } else {
-    verdictRows += `<tr class="fail"><td>Cash-on-Cash Return</td><td>${fmtP(coc)}</td><td>FAIL — Poor return on equity</td></tr>`;
-    flags++;
-  }
-
-  let overallLabel, overallClass, overallNote;
-  if      (flags === 0) { overallLabel = 'STRONG DEAL';           overallClass = 'overall-pass'; overallNote = 'All metrics pass.'; }
-  else if (flags === 1) { overallLabel = 'PROCEED WITH CAUTION';  overallClass = 'overall-ok';   overallNote = 'One metric below threshold.'; }
-  else if (flags === 2) { overallLabel = 'WEAK DEAL';             overallClass = 'overall-fail'; overallNote = 'Negotiate price down or walk.'; }
-  else                  { overallLabel = 'PASS ON THIS PROPERTY'; overallClass = 'overall-fail'; overallNote = 'Multiple red flags.'; }
-
-  // Repair rows
+  // Repair rows (single column)
   let repairHTML = '';
   if (totalRepairsBase > 0) {
     for (const [name, val] of Object.entries(repairItems)) {
-      if (val > 0) repairHTML += `<tr class="cash-in-row"><td>${name}</td><td class="cash-in">$${fmt(val)}</td></tr>`;
+      if (val > 0) repairHTML += `<tr class="ci-row"><td class="row-label">${name}</td><td class="row-value">$${fmt(val)}</td></tr>`;
     }
-    repairHTML += `<tr class="cash-in-row"><td>Contingency (${Math.round(contingencyPct*100)}%)</td><td class="cash-in">$${fmt(rehabContingency)}</td></tr>`;
-    if (rehabVacMo > 0) repairHTML += `<tr class="cash-in-row"><td>Vacancy During Rehab (${rehabVacMo} mo)</td><td class="cash-in">$${fmt(rehabVacCost)}</td></tr>`;
-    repairHTML += `<tr class="cash-in-total"><td>Total Rehab Cost</td><td class="cash-in">$${fmt(totalRepairs)}</td></tr>`;
-    repairHTML += `<tr><td>Funding Method</td><td>${repairFunding.toUpperCase()}</td></tr>`;
-    repairHTML += `<tr><td>All-In Purchase Cost</td><td>$${fmt(price + totalRepairs)}</td></tr>`;
-    repairHTML += `<tr class="cash-in-total"><td>Total Cash Invested</td><td class="cash-in">$${fmt(totalCashInvested)}</td></tr>`;
+    repairHTML += `<tr class="ci-row"><td class="row-label">Contingency (${Math.round(contingencyPct*100)}%)</td><td class="row-value">$${fmt(rehabContingency)}</td></tr>`;
+    if (rehabVacMo > 0) repairHTML += `<tr class="ci-row"><td class="row-label">Vacancy During Rehab (${rehabVacMo} mo)</td><td class="row-value">$${fmt(rehabVacCost)}</td></tr>`;
+    repairHTML += `<tr class="subtotal"><td class="row-label">Total Rehab Cost</td><td class="row-value" style="text-align:right;">$${fmt(totalRepairs)}</td></tr>`;
+    repairHTML += `<tr><td class="row-label">Funding Method</td><td class="row-value">${repairFunding.toUpperCase()}</td></tr>`;
   } else {
-    repairHTML = `<tr><td colspan="2">No repairs entered</td></tr><tr class="cash-in-total"><td>Total Cash Invested</td><td class="cash-in">$${fmt(totalCashInvested)}</td></tr>`;
+    repairHTML = `<tr><td class="row-label" colspan="2" style="color:#aaa;">No repairs entered</td></tr>`;
   }
 
-  const upsideHTML = rentUpside > 0
-    ? `<p class="upside-note">Rent upside: $${fmt(rentUpside)}/yr available if rents are brought to market rates.</p>`
-    : '';
+  // Projection rows
+  const monthlyRate = rate / 12;
+  function remainingBalance(years) {
+    let bal = loanAmount;
+    const mo = Math.min(years * 12, term * 12);
+    for (let m = 1; m <= mo; m++) bal = bal * (1 + monthlyRate) - monthlyPI;
+    return Math.max(bal, 0);
+  }
+
+  let projRows = '';
+  for (let yr = 1; yr <= holdYears; yr++) {
+    const propVal  = price * Math.pow(1 + appreciation, yr);
+    const gC       = grossCurrent * Math.pow(1 + rentGrowth, yr);
+    const gM       = grossMarket  * Math.pow(1 + rentGrowth, yr);
+    const exp      = C.totalExpenses * Math.pow(1 + expGrowth, yr);
+    const bal      = remainingBalance(yr);
+    const equity   = propVal - bal;
+    const cfC_yr   = gC - exp - annualDebtSvc;
+    const cfM_yr   = gM - exp - annualDebtSvc;
+    const cocC_yr  = totalCashInvested > 0 ? (cfC_yr / totalCashInvested) * 100 : 0;
+    const cocM_yr  = totalCashInvested > 0 ? (cfM_yr / totalCashInvested) * 100 : 0;
+    const netSale  = propVal * 0.92 - bal;
+    projRows += `<tr>
+      <td>${yr}</td>
+      <td class="c-cell">$${fmt(cfC_yr)}</td>
+      <td class="m-cell">$${fmt(cfM_yr)}</td>
+      <td class="c-cell">${fmtP(cocC_yr)}</td>
+      <td class="m-cell">${fmtP(cocM_yr)}</td>
+      <td>$${fmt(propVal)}</td>
+      <td>$${fmt(bal)}</td>
+      <td>$${fmt(equity)}</td>
+      <td>$${fmt(netSale)}</td>
+    </tr>`;
+  }
 
   document.getElementById('placeholder').style.display = 'none';
   const report = document.getElementById('report');
   report.style.display = 'block';
-
   report.innerHTML = `
   <div class="container">
+
     <div class="header-bar">
       <h1>${numUnits === 1 ? 'Single Family Investment Analysis' : 'Multifamily Property Analysis'}</h1>
-      <p class="subtitle">Eau Claire / Chippewa Valley Market</p>
+      <p class="subtitle">Chippewa Valley &amp; Western WI Market</p>
       <div class="header-meta">
         <span><strong>${address}</strong></span>
-        <span>${numUnits === 1 ? 'Single Family' : `Units: <strong>${numUnits}</strong>`}</span>
+        <span>Units: <strong>${numUnits}</strong></span>
         <span>Purchase Price: <strong>$${fmt(price)}</strong></span>
         <span>Generated: <strong>${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</strong></span>
       </div>
     </div>
 
-    <div class="grid-gap">
-      <div class="card">
-        <h2>Financing</h2>
-        <table>
-          <tr class="cash-in-row"><td>Down Payment (${Math.round(downPct*100)}%)</td><td class="cash-in">$${fmt(downPayment)}</td></tr>
-          <tr><td>Loan Amount</td><td>$${fmt(loanAmount)}</td></tr>
-          <tr><td>Interest Rate</td><td>${fmtP(rate*100)}</td></tr>
-          <tr><td>Monthly P&amp;I</td><td>$${fmt2(monthlyPI)}</td></tr>
-          <tr class="subtotal"><td>Annual Debt Service</td><td>$${fmt(annualDebtSvc)}</td></tr>
-          <tr class="cash-in-row"><td>Closing Costs</td><td class="cash-in">$${fmt(closingCosts)}</td></tr>
-          <tr><td>Monthly Escrow</td><td>$${fmt(escrow)}/mo</td></tr>
-          <tr><td>True Monthly PITI</td><td>$${fmt2(monthlyPITI)}/mo</td></tr>
-          <tr><td>CapEx Reserve</td><td>$${fmt(capexPerUnit)}/unit/mo</td></tr>
-        </table>
-      </div>
-      <div class="card">
-        <h2>Repairs &amp; Rehab</h2>
-        <table>${repairHTML}</table>
-      </div>
-      <div class="card">
-        <h2>Income</h2>
-        <table>
-          <tr><td>Current Gross Rent/yr</td><td>$${fmt(grossCurrent)}</td></tr>
-          <tr><td>Market Gross Rent/yr</td><td>$${fmt(grossMarket)}</td></tr>
-          <tr class="subtotal"><td>Rent Upside</td><td>$${fmt(rentUpside)}/yr</td></tr>
-        </table>
-      </div>
-      <div class="card">
-        <h2>Annual Operating Expenses</h2>
-        <table>
-          <tr><td>Vacancy (${Math.round(vacancyRate*100)}%)</td><td>$${fmt(vacancyLoss)}</td></tr>
-          <tr><td>Maintenance (${Math.round(maintPct*100)}%)</td><td>$${fmt(maintenance)}</td></tr>
-          <tr><td>Management (${Math.round(mgmtPct*100)}%)</td><td>$${fmt(mgmtCost)}</td></tr>
-          <tr><td>Property Taxes</td><td>$${fmt(taxes)}</td></tr>
-          <tr><td>Insurance</td><td>$${fmt(insurance)}</td></tr>
-          <tr><td>Owner Utilities</td><td>$${fmt(utilityAnnual)}</td></tr>
-          <tr class="subtotal"><td>Total Expenses</td><td>$${fmt(totalExpenses)}</td></tr>
-        </table>
-      </div>
-      <div class="card">
-        <h2>Net Operating Income</h2>
-        <table>
-          <tr><td>NOI (current rents)</td><td>$${fmt(noiCurrent)}/yr</td></tr>
-          <tr><td>NOI (market rents)</td><td>$${fmt(noiMarket)}/yr</td></tr>
-        </table>
-      </div>
-      <div class="card">
-        <h2>Cash Flow</h2>
-        <table>
-          <tr><td>Annual Cash Flow</td><td>$${fmt(annualCashflow)}</td></tr>
-          <tr><td>Monthly Cash Flow</td><td>$${fmt2(monthlyCashflow)}</td></tr>
-          <tr class="subtotal"><td>Cash Flow Per Door/mo</td><td>$${fmt2(cashflowPerDoor)}</td></tr>
-          <tr><td>Cash Flow After CapEx/mo</td><td>$${fmt2(monthlyCFCapex)}</td></tr>
-          <tr><td>Cash Flow/Door After CapEx</td><td>$${fmt2(cfPerDoorCapex)}</td></tr>
-        </table>
-      </div>
+    <!-- FINANCING (single column - same regardless of rent scenario) -->
+    <div class="card">
+      <h2>Financing &amp; Cash Invested</h2>
+      <table class="finance-table">
+        <tr class="section-head"><td colspan="2">Financing</td></tr>
+        <tr class="ci-row"><td class="row-label">Down Payment (${Math.round(downPct*100)}%)</td><td class="row-value">$${fmt(downPayment)}</td></tr>
+        <tr><td class="row-label">Loan Amount</td><td class="row-value">$${fmt(loanAmount)}</td></tr>
+        <tr><td class="row-label">Interest Rate / Term</td><td class="row-value">${fmtP(rate*100)} / ${term}-yr</td></tr>
+        <tr><td class="row-label">Monthly P&amp;I</td><td class="row-value">$${fmt2(monthlyPI)}</td></tr>
+        <tr><td class="row-label">True Monthly PITI</td><td class="row-value">$${fmt2(monthlyPITI)}</td></tr>
+        <tr><td class="row-label">Annual Debt Service</td><td class="row-value">$${fmt(annualDebtSvc)}</td></tr>
+        <tr class="ci-row"><td class="row-label">Closing Costs</td><td class="row-value">$${fmt(closingCosts)}</td></tr>
+        <tr><td class="row-label">CapEx Reserve</td><td class="row-value">$${fmt(capexPerUnit)}/unit/mo</td></tr>
+        <tr class="section-head"><td colspan="2">Repairs &amp; Rehab</td></tr>
+        ${repairHTML}
+        <tr class="ci-total"><td class="row-label">Total Cash Invested</td><td class="row-value">$${fmt(totalCashInvested)}</td></tr>
+      </table>
+      <p class="ci-legend">* Purple rows = components of Total Cash Invested (down payment + closing costs + repairs + rehab vacancy). These figures are identical regardless of rent scenario.</p>
     </div>
 
-    <div style="margin-bottom:16px;">
-      <div class="card full">
-        <h2>Key Metrics</h2>
-        <div class="metrics-grid">
-          <div class="metric-box">
-            <div class="label">Cap Rate (current)</div>
-            <div class="value">${fmtP(capRateCurrent)}</div>
-            <div class="sub">Market: ${fmtP(capRateMarket)}</div>
+    <!-- INCOME + EXPENSES -->
+    <div class="card">
+      <h2>Income &amp; Expenses</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <td class="row-label"></td>
+            <td style="background:#eaf4fb;text-align:center;font-weight:700;color:#0c447c;padding:8px;">Current Rents</td>
+            <td style="background:#e8f6ef;text-align:center;font-weight:700;color:#085041;padding:8px;">Market Rents</td>
+          </tr>
+        </thead>
+        <tr class="section-head"><td colspan="3">Income</td></tr>
+        <tr><td class="row-label">Gross Annual Rent</td><td class="val-current">$${fmt(grossCurrent)}</td><td class="val-market">$${fmt(grossMarket)}</td></tr>
+        <tr><td class="row-label">Vacancy Loss (${Math.round(vacancyRate*100)}%)</td><td class="val-current">($${fmt(C.vacancyLoss)})</td><td class="val-market">($${fmt(M.vacancyLoss)})</td></tr>
+        <tr class="section-head"><td colspan="3">Operating Expenses</td></tr>
+        <tr><td class="row-label">Maintenance (${Math.round(maintPct*100)}%)</td><td class="val-current">$${fmt(C.maintenance)}</td><td class="val-market">$${fmt(M.maintenance)}</td></tr>
+        <tr><td class="row-label">Management (${Math.round(mgmtPct*100)}%)</td><td class="val-current">$${fmt(C.mgmtCost)}</td><td class="val-market">$${fmt(M.mgmtCost)}</td></tr>
+        <tr><td class="row-label">Property Taxes</td><td class="val-current">$${fmt(taxes)}</td><td class="val-market">$${fmt(taxes)}</td></tr>
+        <tr><td class="row-label">Insurance</td><td class="val-current">$${fmt(insurance)}</td><td class="val-market">$${fmt(insurance)}</td></tr>
+        <tr><td class="row-label">Owner Utilities</td><td class="val-current">$${fmt(utilityAnnual)}</td><td class="val-market">$${fmt(utilityAnnual)}</td></tr>
+        <tr class="subtotal"><td class="row-label">Total Expenses</td><td class="val-current">$${fmt(C.totalExpenses)}</td><td class="val-market">$${fmt(M.totalExpenses)}</td></tr>
+        <tr class="section-head"><td colspan="3">Returns</td></tr>
+        <tr class="subtotal"><td class="row-label">NOI / Year</td><td class="val-current">$${fmt(C.noi)}</td><td class="val-market">$${fmt(M.noi)}</td></tr>
+        <tr class="subtotal"><td class="row-label">Annual Cash Flow</td><td class="val-current">$${fmt(C.annualCashflow)}</td><td class="val-market">$${fmt(M.annualCashflow)}</td></tr>
+        <tr><td class="row-label">Monthly Cash Flow</td><td class="val-current">$${fmt2(C.annualCashflow/12)}</td><td class="val-market">$${fmt2(M.annualCashflow/12)}</td></tr>
+        <tr class="highlight-row"><td class="row-label">Cash Flow / Door / Month</td><td class="val-current">$${fmt2(cfDoorC)}</td><td class="val-market">$${fmt2(cfDoorM)}</td></tr>
+        <tr><td class="row-label">CF / Door After CapEx</td><td class="val-current">$${fmt2(cfDoorCapexC)}</td><td class="val-market">$${fmt2(cfDoorCapexM)}</td></tr>
+      </table>
+      ${rentUpside > 0 ? `<p class="upside-note">Rent upside: $${fmt(rentUpside)}/yr ($${fmt(rentUpside/12)}/mo) available by bringing rents to market rate.</p>` : ''}
+    </div>
+
+    <!-- KEY METRICS -->
+    <div class="card">
+      <h2>Key Metrics — Side by Side</h2>
+      <div class="metrics-dual">
+        <div>
+          <div class="metrics-col-label current">Current Rents</div>
+          <div class="metrics-grid">
+            <div class="metric-box current"><div class="label">Cap Rate</div><div class="value">${fmtP(C.capRate)}</div></div>
+            <div class="metric-box current"><div class="label">Cash-on-Cash</div><div class="value">${fmtP(cocC)}</div><div class="sub">Target 6%+</div></div>
+            <div class="metric-box current"><div class="label">GRM</div><div class="value">${grmC.toFixed(1)}x</div></div>
+            <div class="metric-box current"><div class="label">DSCR</div><div class="value">${C.dscr.toFixed(2)}x</div><div class="sub">Target 1.25x+</div></div>
+            <div class="metric-box current"><div class="label">Expense Ratio</div><div class="value">${fmtP(expRatioC,1)}</div></div>
+            <div class="metric-box current"><div class="label">CF / Door</div><div class="value">$${fmt2(cfDoorC)}</div></div>
           </div>
-          <div class="metric-box">
-            <div class="label">Cash-on-Cash Return</div>
-            <div class="value">${fmtP(coc)}</div>
-            <div class="sub">Target: 6%+</div>
-          </div>
-          <div class="metric-box">
-            <div class="label">Gross Rent Multiplier</div>
-            <div class="value">${grm.toFixed(1)}x</div>
-            <div class="sub">Lower is better</div>
-          </div>
-          <div class="metric-box">
-            <div class="label">Debt Service Coverage</div>
-            <div class="value">${dscr.toFixed(2)}x</div>
-            <div class="sub">Target: 1.25x+</div>
-          </div>
-          <div class="metric-box">
-            <div class="label">Expense Ratio</div>
-            <div class="value">${fmtP(expenseRatio, 1)}</div>
-            <div class="sub">Of gross rents</div>
-          </div>
-          <div class="metric-box" style="background:#f9f0fc;border:2px solid #7b2d8b;">
-            <div class="label" style="color:#7b2d8b;">Total Cash Invested</div>
-            <div class="value" style="color:#7b2d8b;">$${fmt(totalCashInvested)}</div>
-            <div class="sub" style="color:#7b2d8b;">* highlighted items above</div>
+        </div>
+        <div>
+          <div class="metrics-col-label market">Market Rents</div>
+          <div class="metrics-grid">
+            <div class="metric-box market"><div class="label">Cap Rate</div><div class="value">${fmtP(M.capRate)}</div></div>
+            <div class="metric-box market"><div class="label">Cash-on-Cash</div><div class="value">${fmtP(cocM)}</div><div class="sub">Target 6%+</div></div>
+            <div class="metric-box market"><div class="label">GRM</div><div class="value">${grmM.toFixed(1)}x</div></div>
+            <div class="metric-box market"><div class="label">DSCR</div><div class="value">${M.dscr.toFixed(2)}x</div><div class="sub">Target 1.25x+</div></div>
+            <div class="metric-box market"><div class="label">Expense Ratio</div><div class="value">${fmtP(expRatioM,1)}</div></div>
+            <div class="metric-box market"><div class="label">CF / Door</div><div class="value">$${fmt2(cfDoorM)}</div></div>
           </div>
         </div>
       </div>
     </div>
 
-    <div style="margin-bottom:16px;">
-      <div class="card full">
-        <h2>Deal Verdict</h2>
-        <table class="verdict-table">
-          <thead><tr><td><strong>Metric</strong></td><td><strong>Value</strong></td><td><strong>Result</strong></td></tr></thead>
-          <tbody>${verdictRows}</tbody>
-        </table>
-        ${upsideHTML}
-        <p class="cash-in-legend">* Purple highlighted values = components of Total Cash Invested (down payment + closing costs + repairs + rehab vacancy)</p>
-        <div class="overall-box ${overallClass}">${overallLabel} &mdash; ${overallNote}</div>
+    <!-- DEAL VERDICT -->
+    <div class="card">
+      <h2>Deal Verdict — Side by Side</h2>
+      <div class="verdict-dual">
+        <div class="verdict-col">
+          <div class="verdict-col-header current">Current Rents</div>
+          <table class="verdict-table"><tbody>${vC.html}</tbody></table>
+          <div class="overall-box ${vC.ovClass}">${vC.ovLabel} &mdash; ${vC.ovNote}</div>
+        </div>
+        <div class="verdict-col">
+          <div class="verdict-col-header market">Market Rents</div>
+          <table class="verdict-table"><tbody>${vM.html}</tbody></table>
+          <div class="overall-box ${vM.ovClass}">${vM.ovLabel} &mdash; ${vM.ovNote}</div>
+        </div>
       </div>
     </div>
 
-    <div class="card full">
-      <h2>Breakdown Over Time</h2>
+    <!-- PROJECTION TABLE -->
+    <div class="card">
+      <h2>Breakdown Over Time (${holdYears}-Year Hold)</h2>
       <div class="table-scroll">
         <table class="breakdown-table">
           <thead>
             <tr>
-              <th>Year</th>
-              <th>Annual Income</th>
-              <th>Mortgage</th>
-              <th>Expenses</th>
-              <th>Cash Flow</th>
-              <th>Cash on Cash Return</th>
-              <th>Equity Accumulated</th>
-              <th>Cash to Receive if Sold at Year End</th>
+              <th rowspan="2" style="text-align:left;">Year</th>
+              <th class="c-head" colspan="2">Annual Cash Flow</th>
+              <th class="c-head" colspan="2">Cash-on-Cash Return</th>
+              <th rowspan="2">Property Value</th>
+              <th rowspan="2">Loan Balance</th>
+              <th rowspan="2">Equity</th>
+              <th rowspan="2">Net if Sold</th>
+            </tr>
+            <tr>
+              <th class="c-head">Current</th>
+              <th class="m-head">Market</th>
+              <th class="c-head">Current</th>
+              <th class="m-head">Market</th>
             </tr>
           </thead>
-          <tbody>
-            ${Array.from({length: holdYears}, (_, idx) => {
-              const year = idx + 1;
-              const value = projectValue(price, appreciation, year);
-              const gross = projectValue(grossCurrent, rentGrowth, year);
-              const expense = projectValue(totalExpenses, expenseGrowth, year);
-              const noi  = gross - expense;
-              const balance = remainingLoanBalance(year);
-              const equity  = value - balance;
-              const cashFlow = noi - annualDebtSvc;
-              const saleCost = value * sellCostPct;
-              const cashToReceive = value - balance - saleCost;
-              const cashOnCash = totalCashInvested > 0 ? (cashFlow / totalCashInvested) * 100 : 0;
-              return `<tr><td>${year}</td><td>$${fmt(gross)}</td><td>$${fmt(balance)}</td><td>$${fmt(expense)}</td><td>$${fmt(cashFlow)}</td><td>${fmtP(cashOnCash)}</td><td>$${fmt(equity)}</td><td>$${fmt(cashToReceive)}</td></tr>`;
-            }).join('')}
-          </tbody>
+          <tbody>${projRows}</tbody>
         </table>
       </div>
-      <p class="upside-note">Projections assume constant debt service and annual growth rates entered above. Use longer hold periods to evaluate long-term equity build and property appreciation.</p>
+      <p class="upside-note" style="margin-top:10px;">Projections assume constant debt service and the annual growth rates above. "Net if Sold" deducts 8% estimated selling costs from property value, then subtracts remaining loan balance.</p>
     </div>
 
     <div class="notes">
-      <strong>Notes:</strong> Analysis uses current rents as the conservative baseline. To model market rents,
-      set current rents equal to market rents and re-run. Always verify taxes and insurance with actual quotes.
-      Consult a CPA for depreciation and tax benefit analysis. This tool is for informational purposes only
-      and does not constitute financial advice.
+      <strong>Notes:</strong> Current rents = conservative baseline. Market rents = upside scenario (rents fully at market).
+      Always verify property taxes and insurance with actual quotes before committing.
+      Consult a CPA for depreciation and tax benefit analysis.
+      This tool is for informational purposes only and does not constitute financial or investment advice.
     </div>
+
   </div>`;
 
   document.getElementById('report').scrollIntoView({ behavior: 'smooth' });
 }
 
-// Initialize unit fields on page load
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', buildUnitFields);
 } else {
