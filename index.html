@@ -256,6 +256,9 @@
   </div>
 
   <h2>Current &amp; Market Rents + Other Income — Per Month</h2>
+  <div class="conservative-note" style="margin-bottom:10px;">
+    &#128200; <strong>EC 2026 market rents (HUD FMR):</strong> Studio $932 · 1BR $962 · 2BR $1,181 · 3BR $1,582. Median all-type rent ~$1,250/mo (Zumper Aug 2026). Defaults below reflect realistic 2BR units in a small multifamily.
+  </div>
   <div id="unit-fields"></div>
   <div class="form-grid" style="margin-bottom:12px;margin-top:12px;">
     <div class="field">
@@ -270,7 +273,8 @@
     </div>
     <div class="field">
       <label>Annual Rent Growth (%)</label>
-      <input type="number" id="rent-growth" value="3" step="0.25">
+      <input type="number" id="rent-growth" value="2.5" step="0.25">
+      <div class="hint">EC rents up 4.2% YoY (Aug 2026) but new supply is rising vacancy — 2–3% conservative forward estimate.</div>
     </div>
   </div>
 
@@ -279,7 +283,7 @@
     <div class="field">
       <label>Vacancy Rate (%)</label>
       <input type="number" id="vacancy" value="8" step="1">
-      <div class="hint">Lender standard: 5–10%</div>
+      <div class="hint">EC multifamily vacancy hit 5.2% in 2026 and rising due to 700+ new units — 8% is conservative and appropriate.</div>
     </div>
     <div class="field">
       <label>Vacancy During Rehab (months)</label>
@@ -289,7 +293,7 @@
 
   <h2>Expenses — Individual Lines with Inflation Rates</h2>
   <div class="conservative-note">
-    &#9888; <strong>Underwriting note:</strong> Each expense has its own annual inflation rate. Property taxes and insurance typically inflate faster than general CPI. Management is set at market rate — keep at 8%+ even if self-managing to stress-test hiring it out.
+    &#9888; <strong>Underwriting note:</strong> Defaults are calibrated to Eau Claire 2026 market data. EC mill rate rose ~15% from 2023–2026 so taxes are set at 3.5% inflation. Insurance updated to $1,800 (realistic floor for 2–4 unit in EC per Steadily/market data). Management kept at 8% market rate — stress-test at this even if you self-manage. Each line inflates at its own rate over the hold period.
   </div>
   <table class="exp-table">
     <thead>
@@ -326,16 +330,16 @@
         <td style="font-size:11px;color:#aaa;">Market rate 8–10%</td>
       </tr>
       <tr>
-        <td>Property Taxes</td>
-        <td><input type="number" id="e-taxes" value="2100"></td>
-        <td><input type="number" id="i-taxes" value="3" class="inf-input"></td>
-        <td style="font-size:11px;color:#aaa;">Often 2–4%/yr</td>
+        <td>Property Taxes<div style="font-size:10px;color:#aaa;margin-top:2px;">EC mill rate: ~$21.95/$1k AV (2026). Effective rate ~1.46% of market value. $160k property ≈ $2,340/yr · $200k ≈ $2,920/yr · $260k ≈ $3,800/yr. Get actual from Eau Claire County assessor.</div></td>
+        <td><input type="number" id="e-taxes" value="2800"></td>
+        <td><input type="number" id="i-taxes" value="3.5" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">Mill rate rose ~5%/yr 2023–2026 (18.98→21.95). 3.5% conservative forward estimate.</td>
       </tr>
       <tr>
-        <td>Insurance</td>
-        <td><input type="number" id="e-insurance" value="1200"></td>
+        <td>Insurance<div style="font-size:10px;color:#aaa;margin-top:2px;">2–4 unit landlord policy in WI: $1,500–$2,500/yr (2026). Get a quote from Colleen/Obie/Steadily for your specific property.</div></td>
+        <td><input type="number" id="e-insurance" value="1800"></td>
         <td><input type="number" id="i-insurance" value="5" class="inf-input"></td>
-        <td style="font-size:11px;color:#aaa;">Running 5–8%/yr recently</td>
+        <td style="font-size:11px;color:#aaa;">Running 5–8%/yr nationally. 5% conservative.</td>
       </tr>
       <tr>
         <td>Owner Utilities (monthly → annual)</td>
@@ -344,10 +348,10 @@
         <td style="font-size:11px;color:#aaa;">Gas, electric, water if owner-paid</td>
       </tr>
       <tr>
-        <td>Water / Sewer (annual)</td>
+        <td>Water / Sewer (annual)<div style="font-size:10px;color:#aaa;margin-top:2px;">EC duplex avg ~$276/quarter = ~$1,100/yr per building. Enter 0 if tenant-paid or included in utilities above.</div></td>
         <td><input type="number" id="e-water" value="0"></td>
         <td><input type="number" id="i-water" value="3" class="inf-input"></td>
-        <td style="font-size:11px;color:#aaa;">If not in utilities above</td>
+        <td style="font-size:11px;color:#aaa;">EC water rates typically 3%/yr. Enter if owner-paid.</td>
       </tr>
       <tr>
         <td>Garbage / Trash</td>
@@ -435,7 +439,7 @@
     <div class="field">
       <label>Annual Appreciation (%)</label>
       <input type="number" id="appreciation" value="3" step="0.25">
-      <div class="hint">Fallback if terminal cap rate method gives lower value.</div>
+      <div class="hint">EC 10-yr avg ~6.8% annualized at resale; Zillow shows +1.3% in 2026. 3% is a conservative long-term assumption. Fallback if terminal cap rate method gives lower exit value.</div>
     </div>
   </div>
 
@@ -524,13 +528,13 @@ function buildUnitFields() {
   for (let i = 0; i < n; i++) html += `<div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.05em;text-align:center;">Unit ${i+1} Current ($)</div>`;
   html += '</div>';
   html += `<div style="display:grid;grid-template-columns:${cols};gap:10px;margin-bottom:14px;">`;
-  for (let i = 0; i < n; i++) html += `<input type="number" id="cur-${i}" value="900" style="padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:13px;text-align:right;width:100%;">`;
+  for (let i = 0; i < n; i++) html += `<input type="number" id="cur-${i}" value="1100" style="padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:13px;text-align:right;width:100%;">`;
   html += '</div>';
   html += `<div style="display:grid;grid-template-columns:${cols};gap:10px;margin-bottom:4px;">`;
   for (let i = 0; i < n; i++) html += `<div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.05em;text-align:center;">Unit ${i+1} Market ($)</div>`;
   html += '</div>';
   html += `<div style="display:grid;grid-template-columns:${cols};gap:10px;margin-bottom:8px;">`;
-  for (let i = 0; i < n; i++) html += `<input type="number" id="mkt-${i}" value="900" style="padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:13px;text-align:right;width:100%;">`;
+  for (let i = 0; i < n; i++) html += `<input type="number" id="mkt-${i}" value="1200" style="padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:13px;text-align:right;width:100%;">`;
   html += '</div>';
   document.getElementById('unit-fields').innerHTML = html;
 }
