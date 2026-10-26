@@ -15,7 +15,7 @@
   .page-sub { font-size: 12px; color: #888; margin-bottom: 16px; }
 
   /* FORM */
-  .form-wrap { max-width: 900px; margin: 0 auto 32px; background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .form-wrap { max-width: 960px; margin: 0 auto 32px; background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
   .form-wrap h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 6px; margin-top: 20px; }
   .form-wrap h2:first-of-type { margin-top: 0; }
   .form-grid   { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px 20px; margin-bottom: 4px; }
@@ -25,12 +25,23 @@
   .field input, .field select { width: 100%; padding: 6px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; font-family: Arial, sans-serif; color: #222; background: #fafafa; }
   .field input:focus, .field select:focus { outline: none; border-color: #1a1a2e; background: #fff; }
   .field .hint { font-size: 11px; color: #aaa; margin-top: 3px; }
-  .field.highlight-field input { background: #fff8e1; border-color: #f0a500; color: #7a5000; font-weight: 600; }
   .field.blue-field input { background: #f0f8ff; border-color: #aad4f5; color: #0c447c; font-weight: 600; }
+
+  /* expense line table in form */
+  .exp-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 4px; }
+  .exp-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; padding: 4px 8px; text-align: left; border-bottom: 1px solid #eee; }
+  .exp-table th:not(:first-child) { text-align: right; }
+  .exp-table td { padding: 5px 8px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+  .exp-table td:first-child { color: #555; font-size: 13px; width: 38%; }
+  .exp-table td:not(:first-child) { text-align: right; }
+  .exp-table input { width: 100%; padding: 4px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; text-align: right; background: #fafafa; }
+  .exp-table .inf-input { width: 68px; }
+
   .repair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-bottom: 14px; }
   .repair-row  { display: flex; align-items: center; gap: 8px; }
   .repair-row label { font-size: 12px; color: #555; flex: 1; }
   .repair-row input { width: 110px; padding: 4px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; text-align: right; flex-shrink: 0; }
+
   .btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
   .btn-primary   { padding: 10px 28px; background: #1a1a2e; color: #fff; border: none; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: Arial, sans-serif; }
   .btn-primary:hover { background: #2d2d50; }
@@ -38,21 +49,20 @@
   .btn-secondary:hover { border-color: #888; color: #333; }
   .conservative-note { background: #fff8e1; border: 1px solid #f0a500; border-left: 4px solid #f0a500; border-radius: 6px; padding: 9px 12px; font-size: 12px; color: #7a5000; margin-bottom: 14px; }
 
-  /* WARNINGS */
   .warning-banner { background: #fff8e1; border: 1px solid #f0a500; border-left: 4px solid #f0a500; border-radius: 6px; padding: 10px 14px; font-size: 13px; color: #7a5000; margin-bottom: 16px; display: none; }
   .warning-banner strong { display: block; margin-bottom: 2px; }
 
   /* REPORT */
-  .container { max-width: 900px; margin: 0 auto; overflow-x: hidden; }
+  .container { max-width: 960px; margin: 0 auto; overflow-x: hidden; }
   .card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
   .card h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
   .header-bar { background: #1a1a2e; color: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
   .header-bar h1 { font-size: 22px; color: #fff; margin-bottom: 4px; }
   .header-bar .subtitle { font-size: 14px; color: #aab; }
-  .header-meta { display: flex; gap: 24px; margin-top: 12px; font-size: 13px; color: #ccd; flex-wrap: wrap; }
+  .header-meta { display: flex; gap: 20px; margin-top: 12px; font-size: 12px; color: #ccd; flex-wrap: wrap; }
   .header-meta span strong { color: #fff; }
 
-  /* FINANCE TABLE (single col) */
+  /* FINANCE TABLE */
   .finance-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .finance-table td { padding: 7px 8px; border-bottom: 1px solid #f0f0f0; }
   .finance-table tr:last-child td { border-bottom: none; }
@@ -69,7 +79,7 @@
   .depr-row .row-label, .depr-row .row-value { background: #f0f7ff !important; color: #1a4a7c !important; }
   .tax-shield-row .row-label, .tax-shield-row .row-value { background: #e8f5e9 !important; color: #1a7f3c !important; font-weight: 700; }
 
-  /* COMPARE TABLE (side-by-side) */
+  /* COMPARE TABLE */
   .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .compare-table td { padding: 7px 8px; border-bottom: 1px solid #f0f0f0; }
   .compare-table tr:last-child td { border-bottom: none; }
@@ -82,8 +92,9 @@
   .compare-table tr.highlight-row .val-market { font-size: 14px; color: #1a7f3c; font-weight: 700; }
   .depr-row-c td { background: #f0f7ff !important; color: #1a4a7c !important; }
   .shield-row-c td.val-current, .shield-row-c td.val-market { background: #e8f5e9 !important; color: #1a7f3c !important; font-weight: 700; }
+  .income-row-c td.val-current, .income-row-c td.val-market { color: #1a7f3c; }
 
-  /* IRR boxes */
+  /* IRR */
   .irr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
   .irr-box { border-radius: 8px; padding: 14px 16px; text-align: center; }
   .irr-box.current { background: #eaf4fb; }
@@ -106,7 +117,7 @@
   .cell-ok   { background: #fef8e7; color: #b07d00; font-weight: 600; }
   .cell-fail { background: #fdecea; color: #c0392b; font-weight: 600; }
 
-  /* SENSITIVITY TABLE */
+  /* SENSITIVITY */
   .sens-wrap { overflow-x: auto; }
   .sens-table { border-collapse: collapse; font-size: 12px; min-width: 500px; }
   .sens-table th { background: #1a1a2e; color: #fff; padding: 7px 10px; text-align: center; font-size: 11px; }
@@ -170,9 +181,8 @@
   .breakdown-table td.warn-cell { background: #fff8e1; color: #7a5000; }
 
   .notes { font-size: 12px; color: #888; background: #fff; border-radius: 8px; padding: 16px 20px; line-height: 1.8; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
-
   #report { display: none; margin-top: 32px; }
-  .placeholder { max-width: 900px; margin: 0 auto; padding: 40px; text-align: center; color: #aaa; font-size: 14px; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .placeholder { max-width: 960px; margin: 0 auto; padding: 40px; text-align: center; color: #aaa; font-size: 14px; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
 
   @media print {
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -182,19 +192,17 @@
     .card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ddd !important; }
     .header-bar { background: #1a1a2e !important; }
     .header-bar h1, .header-meta span strong { color: #fff !important; }
-    .header-bar .subtitle { color: #aab !important; }
-    .header-meta { color: #ccd !important; }
   }
 </style>
 </head>
 <body>
 
 <div class="page-title">Multifamily Property Analyzer — Chippewa Valley &amp; Western WI Market</div>
-<div class="page-sub">Professional-grade underwriting tool with IRR, stress testing, and sensitivity analysis</div>
+<div class="page-sub">Professional-grade underwriting · IRR · Stress test · Sensitivity · Individual expense inflation</div>
 
 <div class="warning-banner" id="pmi-warning">
   <strong>&#9888; Low Down Payment — Investment Property Lender Warning</strong>
-  Conventional lenders typically require 20–25% down on non-owner-occupied investment property. Under 20% is usually only achievable via house-hacking (owner-occupying one unit) with an FHA or owner-occupant conventional loan. Verify with your lender before modeling this scenario.
+  Conventional lenders typically require 20–25% down on non-owner-occupied investment property. Under 20% is usually only achievable via house-hacking (owner-occupying one unit) with FHA or owner-occupant conventional loan.
 </div>
 
 <div class="form-wrap">
@@ -247,45 +255,136 @@
     </div>
   </div>
 
-  <h2>Current &amp; Market Rents — Per Unit / Month</h2>
+  <h2>Current &amp; Market Rents + Other Income — Per Month</h2>
   <div id="unit-fields"></div>
-
-  <h2>Expenses</h2>
-  <div class="conservative-note">
-    &#9888; <strong>Underwriting note:</strong> Defaults are set conservatively (lender-grade). Self-managers often use lower mgmt %, but keep it at 8–10% to stress-test what happens if you ever need to hire it out.
+  <div class="form-grid" style="margin-bottom:12px;margin-top:12px;">
+    <div class="field">
+      <label>Other Income / Month ($)</label>
+      <input type="number" id="other-income" value="0">
+      <div class="hint">Laundry, parking, storage, pet rent, etc.</div>
+    </div>
+    <div class="field">
+      <label>Utility Recoveries / Month ($)</label>
+      <input type="number" id="recoveries" value="0">
+      <div class="hint">Tenant utility reimbursements (RUBS, water bill-back, etc.)</div>
+    </div>
+    <div class="field">
+      <label>Annual Rent Growth (%)</label>
+      <input type="number" id="rent-growth" value="3" step="0.25">
+    </div>
   </div>
-  <div class="form-grid" style="margin-bottom:12px;">
+
+  <h2>Vacancy</h2>
+  <div class="form-grid-2" style="margin-bottom:12px;">
     <div class="field">
       <label>Vacancy Rate (%)</label>
       <input type="number" id="vacancy" value="8" step="1">
       <div class="hint">Lender standard: 5–10%</div>
     </div>
     <div class="field">
-      <label>Maintenance (% gross rents)</label>
-      <input type="number" id="maint-pct" value="10" step="1">
-      <div class="hint">Typical: 8–12%</div>
+      <label>Vacancy During Rehab (months)</label>
+      <input type="number" id="rehab-vac" value="0" step="1">
     </div>
-    <div class="field">
-      <label>Property Mgmt (% gross rents)</label>
-      <input type="number" id="mgmt-pct" value="8" step="1">
-      <div class="hint">Market rate: 8–10% (use actual if self-managing, but test at 8%+)</div>
-    </div>
-    <div class="field">
-      <label>Annual Property Taxes ($)</label>
-      <input type="number" id="taxes" value="2100">
-    </div>
-    <div class="field">
-      <label>Annual Insurance ($)</label>
-      <input type="number" id="insurance" value="1200">
-    </div>
-    <div class="field">
-      <label>Owner Utilities / Month ($)</label>
-      <input type="number" id="utilities" value="0">
-    </div>
+  </div>
+
+  <h2>Expenses — Individual Lines with Inflation Rates</h2>
+  <div class="conservative-note">
+    &#9888; <strong>Underwriting note:</strong> Each expense has its own annual inflation rate. Property taxes and insurance typically inflate faster than general CPI. Management is set at market rate — keep at 8%+ even if self-managing to stress-test hiring it out.
+  </div>
+  <table class="exp-table">
+    <thead>
+      <tr>
+        <th>Expense</th>
+        <th>Annual Amount ($)</th>
+        <th>Annual Inflation (%)</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Maintenance &amp; Repairs</td>
+        <td><input type="number" id="e-maint" value="0"><div style="font-size:10px;color:#aaa;margin-top:2px;">Leave 0 to use % of rents below</div></td>
+        <td><input type="number" id="i-maint" value="2" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">Or use % of gross rents:</td>
+      </tr>
+      <tr>
+        <td style="padding-left:20px;color:#888;">↳ Maintenance as % of gross rents</td>
+        <td><input type="number" id="maint-pct" value="10"><div style="font-size:10px;color:#aaa;margin-top:2px;">Used if dollar amount above = 0</div></td>
+        <td>—</td>
+        <td style="font-size:11px;color:#aaa;">Typical 8–12%</td>
+      </tr>
+      <tr>
+        <td>Property Management</td>
+        <td><input type="number" id="e-mgmt" value="0"><div style="font-size:10px;color:#aaa;margin-top:2px;">Leave 0 to use % of rents below</div></td>
+        <td><input type="number" id="i-mgmt" value="2" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">Or use % of gross rents:</td>
+      </tr>
+      <tr>
+        <td style="padding-left:20px;color:#888;">↳ Management as % of gross rents</td>
+        <td><input type="number" id="mgmt-pct" value="8"><div style="font-size:10px;color:#aaa;margin-top:2px;">Used if dollar amount above = 0</div></td>
+        <td>—</td>
+        <td style="font-size:11px;color:#aaa;">Market rate 8–10%</td>
+      </tr>
+      <tr>
+        <td>Property Taxes</td>
+        <td><input type="number" id="e-taxes" value="2100"></td>
+        <td><input type="number" id="i-taxes" value="3" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">Often 2–4%/yr</td>
+      </tr>
+      <tr>
+        <td>Insurance</td>
+        <td><input type="number" id="e-insurance" value="1200"></td>
+        <td><input type="number" id="i-insurance" value="5" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">Running 5–8%/yr recently</td>
+      </tr>
+      <tr>
+        <td>Owner Utilities (monthly → annual)</td>
+        <td><input type="number" id="e-utilities" value="0"><div style="font-size:10px;color:#aaa;margin-top:2px;">Enter monthly amount</div></td>
+        <td><input type="number" id="i-utilities" value="3" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">Gas, electric, water if owner-paid</td>
+      </tr>
+      <tr>
+        <td>Water / Sewer (annual)</td>
+        <td><input type="number" id="e-water" value="0"></td>
+        <td><input type="number" id="i-water" value="3" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">If not in utilities above</td>
+      </tr>
+      <tr>
+        <td>Garbage / Trash</td>
+        <td><input type="number" id="e-garbage" value="0"></td>
+        <td><input type="number" id="i-garbage" value="2" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">Annual cost</td>
+      </tr>
+      <tr>
+        <td>Lawn Care / Snow Removal</td>
+        <td><input type="number" id="e-lawn" value="0"></td>
+        <td><input type="number" id="i-lawn" value="3" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">Annual cost</td>
+      </tr>
+      <tr>
+        <td>Marketing / Advertising</td>
+        <td><input type="number" id="e-marketing" value="100"></td>
+        <td><input type="number" id="i-marketing" value="2" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">Listing fees, signs, etc.</td>
+      </tr>
+      <tr>
+        <td>Other Expense</td>
+        <td><input type="number" id="e-other" value="0"></td>
+        <td><input type="number" id="i-other" value="2" class="inf-input"></td>
+        <td style="font-size:11px;color:#aaa;">HOA, misc.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:12px;" class="form-grid">
     <div class="field">
       <label>CapEx Reserve ($/unit/month)</label>
       <input type="number" id="capex" value="100">
       <div class="hint">Conservative: $75–$150/unit. Higher for older buildings.</div>
+    </div>
+    <div class="field">
+      <label>CapEx Inflation (%/yr)</label>
+      <input type="number" id="i-capex" value="3" step="0.25">
     </div>
   </div>
 
@@ -317,23 +416,26 @@
     </div>
   </div>
 
-  <h2>Projection Settings</h2>
+  <h2>Exit / Projection Settings</h2>
   <div class="form-grid-4" style="margin-bottom:12px;">
     <div class="field">
       <label>Hold Period (years)</label>
       <input type="number" id="hold-years" value="20" min="1" step="1">
     </div>
     <div class="field">
-      <label>Annual Rent Growth (%)</label>
-      <input type="number" id="rent-growth" value="3" step="0.25">
+      <label>Terminal Cap Rate (%)</label>
+      <input type="number" id="terminal-cap" value="7" step="0.25">
+      <div class="hint">Cap rate buyers will pay at sale. Drives exit value from NOI.</div>
     </div>
     <div class="field">
-      <label>Annual Expense Growth (%)</label>
-      <input type="number" id="expense-growth" value="3" step="0.25">
+      <label>Selling Costs (%)</label>
+      <input type="number" id="sell-costs" value="8" step="0.5">
+      <div class="hint">Agent commissions + closing costs at sale. Typical 6–8%.</div>
     </div>
     <div class="field">
       <label>Annual Appreciation (%)</label>
       <input type="number" id="appreciation" value="3" step="0.25">
+      <div class="hint">Fallback if terminal cap rate method gives lower value.</div>
     </div>
   </div>
 
@@ -366,10 +468,6 @@
         <option value="loan">Loan / HELOC (added to loan)</option>
       </select>
     </div>
-    <div class="field">
-      <label>Vacancy During Rehab (months)</label>
-      <input type="number" id="rehab-vac" value="0" step="1">
-    </div>
   </div>
 
   <div class="btn-row">
@@ -393,7 +491,6 @@ function pmt(rate, nper, pv) {
   return pv * r * Math.pow(1+r, N) / (Math.pow(1+r, N) - 1);
 }
 
-// IRR via bisection
 function calcIRR(cashFlows) {
   const npv = r => cashFlows.reduce((s, cf, i) => s + cf / Math.pow(1 + r, i), 0);
   let lo = -0.9999, hi = 5.0;
@@ -438,16 +535,37 @@ function buildUnitFields() {
   document.getElementById('unit-fields').innerHTML = html;
 }
 
-function calcScenario(gross, annualDebtSvc, pmiAnnual, vacancyRate, maintPct, mgmtPct, taxes, insurance, utilityAnnual, price) {
-  const vacancyLoss   = gross * vacancyRate;
-  const maintenance   = gross * maintPct;
-  const mgmtCost      = gross * mgmtPct;
-  const totalExpenses = vacancyLoss + maintenance + mgmtCost + taxes + insurance + utilityAnnual;
-  const noi           = gross - totalExpenses;
-  const annualCashflow = noi - annualDebtSvc - pmiAnnual;
-  const capRate        = price > 0 ? (noi / price) * 100 : 0;
-  const dscr           = annualDebtSvc > 0 ? noi / annualDebtSvc : 0;
-  return { gross, vacancyLoss, maintenance, mgmtCost, totalExpenses, noi, annualCashflow, capRate, dscr };
+// Build year-N expense total with per-line inflation
+function buildExpenses(yr, grossRent, maintPctVal, mgmtPctVal) {
+  const g  = n => +document.getElementById(n).value || 0;
+  const gi = n => (+document.getElementById(n).value || 0) / 100;
+
+  const inf = (base, rate) => base * Math.pow(1 + rate, yr - 1);
+
+  // Maintenance: dollar if set, else % of rent
+  const maintBase = g('e-maint') > 0 ? g('e-maint') : grossRent * maintPctVal;
+  const maint     = g('e-maint') > 0 ? inf(maintBase, gi('i-maint')) : grossRent * maintPctVal;
+
+  // Management: dollar if set, else % of rent
+  const mgmtBase  = g('e-mgmt') > 0 ? g('e-mgmt') : grossRent * mgmtPctVal;
+  const mgmt      = g('e-mgmt') > 0 ? inf(mgmtBase, gi('i-mgmt')) : grossRent * mgmtPctVal;
+
+  const taxes     = inf(g('e-taxes'),     gi('i-taxes'));
+  const insurance = inf(g('e-insurance'), gi('i-insurance'));
+  const utilities = inf(g('e-utilities') * 12, gi('i-utilities'));
+  const water     = inf(g('e-water'),     gi('i-water'));
+  const garbage   = inf(g('e-garbage'),   gi('i-garbage'));
+  const lawn      = inf(g('e-lawn'),      gi('i-lawn'));
+  const marketing = inf(g('e-marketing'), gi('i-marketing'));
+  const other     = inf(g('e-other'),     gi('i-other'));
+
+  const total = maint + mgmt + taxes + insurance + utilities + water + garbage + lawn + marketing + other;
+  return { maint, mgmt, taxes, insurance, utilities, water, garbage, lawn, marketing, other, total };
+}
+
+// Year-1 expense snapshot for display
+function year1Expenses(grossRent, maintPctVal, mgmtPctVal) {
+  return buildExpenses(1, grossRent, maintPctVal, mgmtPctVal);
 }
 
 function verdictRows(cfDoor, capRate, dscr, coc, expRatio) {
@@ -479,11 +597,10 @@ function verdictRows(cfDoor, capRate, dscr, coc, expRatio) {
 }
 
 function sensClass(coc) {
-  if (coc >= 6)  return 'sens-pass';
-  if (coc >= 3)  return 'sens-ok';
+  if (coc >= 6) return 'sens-pass';
+  if (coc >= 3) return 'sens-ok';
   return 'sens-fail';
 }
-
 function stressClass(val, pass, ok) {
   if (val >= pass) return 'cell-pass';
   if (val >= ok)   return 'cell-ok';
@@ -499,20 +616,21 @@ function runAnalysis() {
   const term         = +document.getElementById('term').value;
   const escrow       = +document.getElementById('escrow').value;
   const pmiMonthly   = +document.getElementById('pmi').value;
+  const otherIncome  = +document.getElementById('other-income').value * 12;
+  const recoveries   = +document.getElementById('recoveries').value * 12;
   const vacancyRate  = +document.getElementById('vacancy').value / 100;
-  const maintPct     = +document.getElementById('maint-pct').value / 100;
-  const mgmtPct      = +document.getElementById('mgmt-pct').value / 100;
-  const taxes        = +document.getElementById('taxes').value;
-  const insurance    = +document.getElementById('insurance').value;
-  const utilities    = +document.getElementById('utilities').value;
+  const maintPctVal  = +document.getElementById('maint-pct').value / 100;
+  const mgmtPctVal   = +document.getElementById('mgmt-pct').value / 100;
   const capexPerUnit = +document.getElementById('capex').value;
+  const capexInflation = +document.getElementById('i-capex').value / 100;
   const closingExact = +document.getElementById('closing-exact').value;
   const closingPct   = +document.getElementById('closing-pct').value / 100;
   const landValue    = +document.getElementById('land-value').value;
   const marginalRate = +document.getElementById('tax-rate').value / 100;
   const holdYears    = Math.max(1, +document.getElementById('hold-years').value);
   const rentGrowth   = +document.getElementById('rent-growth').value / 100;
-  const expGrowth    = +document.getElementById('expense-growth').value / 100;
+  const terminalCap  = +document.getElementById('terminal-cap').value / 100;
+  const sellCostsPct = +document.getElementById('sell-costs').value / 100;
   const appreciation = +document.getElementById('appreciation').value / 100;
   const contingencyPct = +document.getElementById('contingency').value / 100;
   const repairFunding  = document.getElementById('repair-funding').value;
@@ -556,31 +674,60 @@ function runAnalysis() {
   const closingCosts  = closingExact > 0 ? closingExact : price * closingPct;
   const monthlyPITI   = monthlyPI + escrow + pmiMonthly;
   const capexAnnual   = capexPerUnit * numUnits * 12;
-  const utilityAnnual = utilities * 12;
 
   let totalCashInvested = downPayment + closingCosts + rehabVacCost;
   if (repairFunding === 'cash') totalCashInvested += totalRepairs;
 
-  const grossCurrent = currentRents.reduce((a,b)=>a+b,0) * 12;
-  const grossMarket  = marketRents.reduce((a,b)=>a+b,0)  * 12;
-  const rentUpside   = grossMarket - grossCurrent;
+  const rentOnlyC    = currentRents.reduce((a,b)=>a+b,0) * 12;
+  const rentOnlyM    = marketRents.reduce((a,b)=>a+b,0)  * 12;
+  const grossCurrentTotal = rentOnlyC + otherIncome + recoveries;
+  const grossMarketTotal  = rentOnlyM + otherIncome + recoveries;
+  const rentUpside   = rentOnlyM - rentOnlyC;
+
+  // Year-1 expenses for display
+  const E1C = year1Expenses(grossCurrentTotal, maintPctVal, mgmtPctVal);
+  const E1M = year1Expenses(grossMarketTotal,  maintPctVal, mgmtPctVal);
+
+  // Year-1 calcs for metrics
+  const vacLossC   = grossCurrentTotal * vacancyRate;
+  const vacLossM   = grossMarketTotal  * vacancyRate;
+  const egiC       = grossCurrentTotal - vacLossC;
+  const egiM       = grossMarketTotal  - vacLossM;
+  const noiC       = egiC - E1C.total;
+  const noiM       = egiM - E1M.total;
+  const cfC        = noiC - annualDebtSvc - pmiAnnual;
+  const cfM        = noiM - annualDebtSvc - pmiAnnual;
+  const capRateC   = price > 0 ? (noiC / price) * 100 : 0;
+  const capRateM   = price > 0 ? (noiM / price) * 100 : 0;
+  const dscrC      = annualDebtSvc > 0 ? noiC / annualDebtSvc : 0;
+  const dscrM      = annualDebtSvc > 0 ? noiM / annualDebtSvc : 0;
+  const cocC       = totalCashInvested > 0 ? (cfC / totalCashInvested) * 100 : 0;
+  const cocM       = totalCashInvested > 0 ? (cfM / totalCashInvested) * 100 : 0;
+  const grmC       = grossCurrentTotal > 0 ? price / grossCurrentTotal : 0;
+  const grmM       = grossMarketTotal  > 0 ? price / grossMarketTotal  : 0;
+  const cfDoorC    = cfC / numUnits / 12;
+  const cfDoorM    = cfM / numUnits / 12;
+  const cfDoorCapexC = (cfC - capexAnnual) / numUnits / 12;
+  const cfDoorCapexM = (cfM - capexAnnual) / numUnits / 12;
+  const expRatioC  = egiC > 0 ? (E1C.total / egiC) * 100 : 0;
+  const expRatioM  = egiM > 0 ? (E1M.total / egiM) * 100 : 0;
 
   // Depreciation
   const depreciableBasis = Math.max(0, price - landValue);
   const annualDepr       = depreciableBasis / 27.5;
   const annualTaxShield  = annualDepr * marginalRate;
+  const totalAccumDepr   = annualDepr * holdYears;
+  const deprRecaptureTax = totalAccumDepr * 0.25;
 
-  // PMI drop-off at 80% LTV
+  // PMI drop-off
   const ltvThreshold = price * 0.80;
   const monthlyRate  = rate / 12;
-
   function remainingBalance(years) {
     let bal = loanAmount;
     const mo = Math.min(years * 12, term * 12);
     for (let m = 1; m <= mo; m++) bal = bal * (1 + monthlyRate) - monthlyPI;
     return Math.max(bal, 0);
   }
-
   let pmiDropYear = 0;
   if (pmiMonthly > 0) {
     for (let yr = 1; yr <= term; yr++) {
@@ -588,60 +735,65 @@ function runAnalysis() {
     }
   }
 
-  const C = calcScenario(grossCurrent, annualDebtSvc, pmiAnnual, vacancyRate, maintPct, mgmtPct, taxes, insurance, utilityAnnual, price);
-  const M = calcScenario(grossMarket,  annualDebtSvc, pmiAnnual, vacancyRate, maintPct, mgmtPct, taxes, insurance, utilityAnnual, price);
+  const vC = verdictRows(cfDoorC, capRateC, dscrC, cocC, expRatioC);
+  const vM = verdictRows(cfDoorM, capRateM, dscrM, cocM, expRatioM);
 
-  const cocC = totalCashInvested > 0 ? (C.annualCashflow / totalCashInvested) * 100 : 0;
-  const cocM = totalCashInvested > 0 ? (M.annualCashflow / totalCashInvested) * 100 : 0;
-  const grmC = grossCurrent > 0 ? price / grossCurrent : 0;
-  const grmM = grossMarket  > 0 ? price / grossMarket  : 0;
-  const cfDoorC = C.annualCashflow / numUnits / 12;
-  const cfDoorM = M.annualCashflow / numUnits / 12;
-  const cfDoorCapexC = (C.annualCashflow - capexAnnual) / numUnits / 12;
-  const cfDoorCapexM = (M.annualCashflow - capexAnnual) / numUnits / 12;
-  const expRatioC = grossCurrent > 0 ? (C.totalExpenses / grossCurrent) * 100 : 0;
-  const expRatioM = grossMarket  > 0 ? (M.totalExpenses / grossMarket)  * 100 : 0;
-
-  const vC = verdictRows(cfDoorC, C.capRate, C.dscr, cocC, expRatioC);
-  const vM = verdictRows(cfDoorM, M.capRate, M.dscr, cocM, expRatioM);
-
-  // ── PROJECTION + IRR cash flows ──
-  // Depreciation recapture at sale: 25% of total accumulated depreciation
-  const totalAccumDepr  = annualDepr * holdYears;
-  const deprRecaptureTax = totalAccumDepr * 0.25;
-
+  // ── PROJECTION ──
   let projRows = '';
   let irrFlowsC = [-totalCashInvested];
   let irrFlowsM = [-totalCashInvested];
 
   for (let yr = 1; yr <= holdYears; yr++) {
-    const propVal   = price  * Math.pow(1 + appreciation, yr);
-    const gC        = grossCurrent * Math.pow(1 + rentGrowth, yr);
-    const gM        = grossMarket  * Math.pow(1 + rentGrowth, yr);
-    const exp       = C.totalExpenses * Math.pow(1 + expGrowth, yr);
+    const rentC_yr  = rentOnlyC * Math.pow(1 + rentGrowth, yr);
+    const rentM_yr  = rentOnlyM * Math.pow(1 + rentGrowth, yr);
+    const oth_yr    = otherIncome * Math.pow(1 + rentGrowth, yr);
+    const rec_yr    = recoveries  * Math.pow(1 + rentGrowth, yr);
+    const grossC_yr = rentC_yr + oth_yr + rec_yr;
+    const grossM_yr = rentM_yr + oth_yr + rec_yr;
+    const vacC_yr   = grossC_yr * vacancyRate;
+    const vacM_yr   = grossM_yr * vacancyRate;
+    const egiC_yr   = grossC_yr - vacC_yr;
+    const egiM_yr   = grossM_yr - vacM_yr;
+
+    const EC_yr = buildExpenses(yr, grossC_yr, maintPctVal, mgmtPctVal);
+    const EM_yr = buildExpenses(yr, grossM_yr, maintPctVal, mgmtPctVal);
+    const capex_yr  = capexAnnual * Math.pow(1 + capexInflation, yr - 1);
+
+    const noiC_yr   = egiC_yr - EC_yr.total;
+    const noiM_yr   = egiM_yr - EM_yr.total;
+
     const bal       = remainingBalance(yr);
-    const equity    = propVal - bal;
     const pmiThisYr = (pmiMonthly > 0 && bal > ltvThreshold) ? pmiAnnual : 0;
-    const cfC_yr    = gC - exp - annualDebtSvc - pmiThisYr;
-    const cfM_yr    = gM - exp - annualDebtSvc - pmiThisYr;
+    const cfC_yr    = noiC_yr - annualDebtSvc - pmiThisYr;
+    const cfM_yr    = noiM_yr - annualDebtSvc - pmiThisYr;
+
     const priorBal  = yr > 1 ? remainingBalance(yr - 1) : loanAmount;
     const eqPaydown = priorBal - bal;
     const totalRetC = cfC_yr + eqPaydown;
     const totalRetM = cfM_yr + eqPaydown;
     const cocC_yr   = totalCashInvested > 0 ? (cfC_yr / totalCashInvested) * 100 : 0;
     const cocM_yr   = totalCashInvested > 0 ? (cfM_yr / totalCashInvested) * 100 : 0;
-    // Net if sold: sale price - selling costs (8%) - loan balance - depreciation recapture tax
-    const salePrice = propVal;
-    const sellCosts = salePrice * 0.08;
-    const netSale   = salePrice - sellCosts - bal - deprRecaptureTax;
 
-    // IRR: add cash flow each year, add net sale proceeds in final year
+    // Exit value: use terminal cap rate on exit NOI (more realistic),
+    // but floor at appreciation-based value so you don't get weird negatives
+    const apprecVal   = price * Math.pow(1 + appreciation, yr);
+    const exitValCapC = terminalCap > 0 ? noiC_yr / terminalCap : apprecVal;
+    const exitValCapM = terminalCap > 0 ? noiM_yr / terminalCap : apprecVal;
+    const exitValC    = Math.max(exitValCapC, apprecVal);
+    const exitValM    = Math.max(exitValCapM, apprecVal);
+
+    // Use current rents exit value for equity/balance display
+    const displayVal  = exitValC;
+    const equity      = displayVal - bal;
+    const netSaleC    = exitValC * (1 - sellCostsPct) - bal - deprRecaptureTax;
+    const netSaleM    = exitValM * (1 - sellCostsPct) - bal - deprRecaptureTax;
+
     if (yr < holdYears) {
       irrFlowsC.push(cfC_yr);
       irrFlowsM.push(cfM_yr);
     } else {
-      irrFlowsC.push(cfC_yr + netSale);
-      irrFlowsM.push(cfM_yr + netSale);
+      irrFlowsC.push(cfC_yr + netSaleC);
+      irrFlowsM.push(cfM_yr + netSaleM);
     }
 
     const pmiNote = pmiThisYr > 0 ? ' ⚑' : '';
@@ -654,10 +806,10 @@ function runAnalysis() {
       <td>$${fmt(eqPaydown)}</td>
       <td class="eq-cell">$${fmt(totalRetC)}</td>
       <td class="eq-cell">$${fmt(totalRetM)}</td>
-      <td>$${fmt(propVal)}</td>
+      <td>$${fmt(displayVal)}</td>
       <td>$${fmt(bal)}</td>
       <td>$${fmt(equity)}</td>
-      <td class="${netSale < 0 ? 'warn-cell' : ''}">$${fmt(netSale)}</td>
+      <td class="${netSaleC < 0 ? 'warn-cell' : ''}">$${fmt(netSaleC)}</td>
     </tr>`;
   }
 
@@ -665,93 +817,72 @@ function runAnalysis() {
   const irrM = calcIRR(irrFlowsM);
   const irrCStr = irrC !== null ? fmtP(irrC * 100) : 'N/A';
   const irrMStr = irrM !== null ? fmtP(irrM * 100) : 'N/A';
-
   function irrVerdict(irr) {
-    if (irr === null) return { cls: 'overall-fail', txt: 'Cannot calculate' };
-    const pct = irr * 100;
-    if (pct >= 12) return { cls: 'overall-pass', txt: 'Excellent — beats most benchmarks' };
-    if (pct >= 8)  return { cls: 'overall-pass', txt: 'Good — competitive with stock market' };
-    if (pct >= 5)  return { cls: 'overall-ok',   txt: 'Marginal — low premium over index funds' };
-    return { cls: 'overall-fail', txt: 'Poor — consider alternatives' };
+    if (irr === null) return { cls:'overall-fail', txt:'Cannot calculate' };
+    const p = irr * 100;
+    if (p >= 12) return { cls:'overall-pass', txt:'Excellent — beats most benchmarks' };
+    if (p >= 8)  return { cls:'overall-pass', txt:'Good — competitive with stock market' };
+    if (p >= 5)  return { cls:'overall-ok',   txt:'Marginal — low premium over index funds' };
+    return { cls:'overall-fail', txt:'Poor — consider alternatives' };
   }
   const irrVerdC = irrVerdict(irrC);
   const irrVerdM = irrVerdict(irrM);
 
+  // Terminal cap exit value for display
+  const exitNOI_C = rentOnlyC * Math.pow(1+rentGrowth, holdYears) + otherIncome + recoveries;
+  const exitNOI_M = rentOnlyM * Math.pow(1+rentGrowth, holdYears) + otherIncome + recoveries;
+  const exitCapValC = terminalCap > 0 ? (exitNOI_C / terminalCap) : price * Math.pow(1+appreciation, holdYears);
+  const exitCapValM = terminalCap > 0 ? (exitNOI_M / terminalCap) : price * Math.pow(1+appreciation, holdYears);
+
   // ── STRESS TEST ──
-  // Rate stress: +1%, +2% over entered rate; Vacancy stress: +5%, +10%
   function quickCF(testRate, testVac, gross) {
-    const loanAmt2  = repairFunding === 'loan' ? loanAmount : price - downPayment;
-    const pi2       = pmt(testRate, term, loanAmt2);
-    const ds2       = pi2 * 12;
-    const vacLoss2  = gross * testVac;
-    const maint2    = gross * maintPct;
-    const mgmt2     = gross * mgmtPct;
-    const exp2      = vacLoss2 + maint2 + mgmt2 + taxes + insurance + utilityAnnual;
-    const noi2      = gross - exp2;
-    const cf2       = noi2 - ds2 - pmiAnnual;
-    const dscr2     = ds2 > 0 ? noi2 / ds2 : 0;
-    return { cfDoor: cf2 / numUnits / 12, dscr: dscr2 };
+    const pi2  = pmt(testRate, term, loanAmount);
+    const ds2  = pi2 * 12;
+    const eg2  = gross * (1 - testVac);
+    const exp2 = year1Expenses(gross, maintPctVal, mgmtPctVal).total;
+    const noi2 = eg2 - exp2;
+    const cf2  = noi2 - ds2 - pmiAnnual;
+    return { cfDoor: cf2 / numUnits / 12, dscr: ds2 > 0 ? noi2 / ds2 : 0 };
   }
+  const stressRates  = [rate, rate+0.01, rate+0.02];
+  const stressVacs   = [vacancyRate, vacancyRate+0.05, vacancyRate+0.10];
+  const stressLabels = [`Base rate (${fmtP(rate*100)})`, `Rate +1% (${fmtP((rate+0.01)*100)})`, `Rate +2% (${fmtP((rate+0.02)*100)})`];
+  const vacLabels    = [`Base vac (${fmtP(vacancyRate*100)})`, `Vac +5% (${fmtP((vacancyRate+0.05)*100)})`, `Vac +10% (${fmtP((vacancyRate+0.10)*100)})`];
 
-  const stressRates = [rate, rate + 0.01, rate + 0.02];
-  const stressVacs  = [vacancyRate, vacancyRate + 0.05, vacancyRate + 0.10];
-  const stressLabels = [
-    `Base rate (${fmtP(rate*100)})`,
-    `Rate +1% (${fmtP((rate+0.01)*100)})`,
-    `Rate +2% (${fmtP((rate+0.02)*100)})`
-  ];
-  const vacLabels = [
-    `Base vac (${fmtP(vacancyRate*100)})`,
-    `Vac +5% (${fmtP((vacancyRate+0.05)*100)})`,
-    `Vac +10% (${fmtP((vacancyRate+0.10)*100)})`
-  ];
-
-  // CF/door stress table (current rents)
-  let stressCFRows = '';
+  let stressCFRows = '', stressDSCRRows = '';
   stressRates.forEach((r2, ri) => {
-    let cells = `<td class="row-label-cell">${stressLabels[ri]}</td>`;
+    let cfCells = `<td class="row-label-cell">${stressLabels[ri]}</td>`;
+    let dscrCells = `<td class="row-label-cell">${stressLabels[ri]}</td>`;
     stressVacs.forEach(v2 => {
-      const { cfDoor } = quickCF(r2, v2, grossCurrent);
-      cells += `<td class="${stressClass(cfDoor, 200, 100)}">$${Math.round(cfDoor)}</td>`;
+      const { cfDoor, dscr } = quickCF(r2, v2, grossCurrentTotal);
+      cfCells   += `<td class="${stressClass(cfDoor, 200, 100)}">$${Math.round(cfDoor)}</td>`;
+      dscrCells += `<td class="${stressClass(dscr, 1.25, 1.0)}">${dscr.toFixed(2)}x</td>`;
     });
-    stressCFRows += `<tr>${cells}</tr>`;
+    stressCFRows   += `<tr>${cfCells}</tr>`;
+    stressDSCRRows += `<tr>${dscrCells}</tr>`;
   });
 
-  // DSCR stress table (current rents)
-  let stressDSCRRows = '';
-  stressRates.forEach((r2, ri) => {
-    let cells = `<td class="row-label-cell">${stressLabels[ri]}</td>`;
-    stressVacs.forEach(v2 => {
-      const { dscr } = quickCF(r2, v2, grossCurrent);
-      cells += `<td class="${stressClass(dscr, 1.25, 1.0)}">${dscr.toFixed(2)}x</td>`;
-    });
-    stressDSCRRows += `<tr>${cells}</tr>`;
-  });
-
-  // ── SENSITIVITY TABLE (price vs rent, cash-on-cash) ──
-  const basePrices = [-20000, -10000, 0, 10000, 20000].map(d => price + d);
-  const baseMonthlyRents = [-100, -50, 0, 50, 100].map(d => (grossCurrent / 12) + d);
-  const rentHeaders = baseMonthlyRents.map(r => `$${fmt(r)}/mo total`);
-
+  // ── SENSITIVITY ──
+  const basePrices = [-20000,-10000,0,10000,20000].map(d => price+d);
+  const baseTotalRents = [-100,-50,0,50,100].map(d => (grossCurrentTotal/12)+d);
+  const rentHeaders = baseTotalRents.map(r => `$${fmt(r)}/mo`);
   let sensRows = '';
   basePrices.forEach(p => {
-    const downAmt2 = p * downPct;
-    const loan2    = p - downAmt2 + (repairFunding === 'loan' ? totalRepairs : 0);
-    const pi2      = pmt(rate, term, loan2);
-    const ds2      = pi2 * 12;
-    const ci2      = downAmt2 + closingCosts + (repairFunding === 'cash' ? totalRepairs : 0) + rehabVacCost;
+    const dAmt2 = p * downPct;
+    const loan2 = p - dAmt2 + (repairFunding==='loan' ? totalRepairs : 0);
+    const pi2   = pmt(rate, term, loan2);
+    const ds2   = pi2 * 12;
+    const ci2   = dAmt2 + closingCosts + (repairFunding==='cash' ? totalRepairs : 0) + rehabVacCost;
     let row = `<tr><td class="row-label-cell">$${fmt(p)} purchase</td>`;
-    baseMonthlyRents.forEach((mr, mi) => {
-      const gross2   = mr * 12;
-      const vacL2    = gross2 * vacancyRate;
-      const maint2   = gross2 * maintPct;
-      const mgmt2    = gross2 * mgmtPct;
-      const exp2     = vacL2 + maint2 + mgmt2 + taxes + insurance + utilityAnnual;
-      const noi2     = gross2 - exp2;
-      const cf2      = noi2 - ds2 - pmiAnnual;
-      const coc2     = ci2 > 0 ? (cf2 / ci2) * 100 : 0;
-      const isBase   = (p === price) && (mi === 2);
-      row += `<td class="${sensClass(coc2)}${isBase ? ' sens-highlight' : ''}">${fmtP(coc2)}</td>`;
+    baseTotalRents.forEach((mr, mi) => {
+      const gross2 = mr * 12;
+      const eg2    = gross2 * (1 - vacancyRate);
+      const exp2   = year1Expenses(gross2, maintPctVal, mgmtPctVal).total;
+      const noi2   = eg2 - exp2;
+      const cf2    = noi2 - ds2 - pmiAnnual;
+      const coc2   = ci2 > 0 ? (cf2 / ci2) * 100 : 0;
+      const isBase = (p === price) && (mi === 2);
+      row += `<td class="${sensClass(coc2)}${isBase?' sens-highlight':''}">${fmtP(coc2)}</td>`;
     });
     row += '</tr>';
     sensRows += row;
@@ -766,19 +897,19 @@ function runAnalysis() {
     repairHTML += `<tr class="ci-row"><td class="row-label">Contingency (${Math.round(contingencyPct*100)}%)</td><td class="row-value">$${fmt(rehabContingency)}</td></tr>`;
     if (rehabVacMo > 0) repairHTML += `<tr class="ci-row"><td class="row-label">Vacancy During Rehab (${rehabVacMo} mo)</td><td class="row-value">$${fmt(rehabVacCost)}</td></tr>`;
     repairHTML += `<tr class="subtotal"><td class="row-label">Total Rehab Cost</td><td class="row-value" style="text-align:right;">$${fmt(totalRepairs)}</td></tr>`;
-    repairHTML += `<tr><td class="row-label">Funding Method</td><td class="row-value">${repairFunding.toUpperCase()}</td></tr>`;
+    repairHTML += `<tr><td class="row-label">Funding</td><td class="row-value">${repairFunding.toUpperCase()}</td></tr>`;
   } else {
     repairHTML = `<tr><td class="row-label" colspan="2" style="color:#aaa;">No repairs entered</td></tr>`;
   }
 
   const pmiRow = pmiMonthly > 0
-    ? `<tr class="pmi-row"><td class="row-label">PMI (monthly)</td><td class="row-value">$${fmt2(pmiMonthly)}/mo${pmiDropYear ? ` — drops off yr ${pmiDropYear}` : ''}</td></tr>` : '';
+    ? `<tr class="pmi-row"><td class="row-label">PMI (monthly)</td><td class="row-value">$${fmt2(pmiMonthly)}/mo${pmiDropYear?' — drops off yr '+pmiDropYear:''}</td></tr>` : '';
 
   const downPctWarning = downPct < 0.20
-    ? `<div class="warning-banner" style="display:block;margin-top:12px;"><strong>&#9888; &lt;20% Down — Lender Caution</strong>Most conventional lenders require 20–25% down for investment properties. Achievable via house-hacking with FHA or owner-occupant loan only.</div>` : '';
+    ? `<div class="warning-banner" style="display:block;margin-top:12px;"><strong>&#9888; &lt;20% Down — Lender Caution</strong>Most conventional lenders require 20–25% down for investment properties.</div>` : '';
 
   const pmiNote = pmiMonthly > 0 && pmiDropYear
-    ? `<p class="upside-note">PMI of $${fmt2(pmiMonthly)}/mo drops off year ${pmiDropYear} when loan balance reaches 80% LTV (~$${fmt(ltvThreshold)}). Cash flow improves by $${fmt2(pmiMonthly)}/mo from that point forward. Years with active PMI marked ⚑ in projection table.</p>` : '';
+    ? `<p class="upside-note">PMI of $${fmt2(pmiMonthly)}/mo drops off year ${pmiDropYear} when loan balance reaches 80% LTV. Years with active PMI marked ⚑ in projection.</p>` : '';
 
   document.getElementById('placeholder').style.display = 'none';
   const report = document.getElementById('report');
@@ -787,7 +918,7 @@ function runAnalysis() {
   <div class="container">
 
     <div class="header-bar">
-      <h1>${numUnits===1 ? 'Single Family Investment Analysis' : 'Multifamily Property Analysis'}</h1>
+      <h1>${numUnits===1?'Single Family Investment Analysis':'Multifamily Property Analysis'}</h1>
       <p class="subtitle">Chippewa Valley &amp; Western WI Market — Professional Underwrite</p>
       <div class="header-meta">
         <span><strong>${address}</strong></span>
@@ -796,6 +927,7 @@ function runAnalysis() {
         <span>Down: <strong>${Math.round(downPct*100)}%</strong></span>
         <span>Rate: <strong>${fmtP(rate*100)}</strong></span>
         <span>Hold: <strong>${holdYears} yr</strong></span>
+        <span>Exit cap: <strong>${fmtP(terminalCap*100)}</strong></span>
         <span>Generated: <strong>${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</strong></span>
       </div>
     </div>
@@ -815,22 +947,27 @@ function runAnalysis() {
         <tr><td class="row-label">True Monthly PITI${pmiMonthly>0?'+PMI':''}</td><td class="row-value">$${fmt2(monthlyPITI)}</td></tr>
         <tr><td class="row-label">Annual Debt Service (P&amp;I)</td><td class="row-value">$${fmt(annualDebtSvc)}</td></tr>
         <tr class="ci-row"><td class="row-label">Closing Costs</td><td class="row-value">$${fmt(closingCosts)}</td></tr>
-        <tr><td class="row-label">CapEx Reserve</td><td class="row-value">$${fmt(capexPerUnit)}/unit/mo ($${fmt(capexAnnual)}/yr)</td></tr>
+        <tr><td class="row-label">CapEx Reserve</td><td class="row-value">$${fmt(capexPerUnit)}/unit/mo ($${fmt(capexAnnual)}/yr yr-1)</td></tr>
         <tr class="section-head"><td colspan="2">Depreciation &amp; Tax</td></tr>
         <tr><td class="row-label">Depreciable Basis (price − land)</td><td class="row-value">$${fmt(depreciableBasis)}</td></tr>
         <tr class="depr-row"><td class="row-label">Annual Depreciation (27.5 yr)</td><td class="row-value">$${fmt(annualDepr)}/yr</td></tr>
         <tr class="tax-shield-row"><td class="row-label">Est. Annual Tax Shield (${Math.round(marginalRate*100)}%)</td><td class="row-value">$${fmt(annualTaxShield)}/yr</td></tr>
         <tr><td class="row-label">Depr. Recapture at Sale (25% × accum.)</td><td class="row-value">~$${fmt(deprRecaptureTax)} (yr ${holdYears})</td></tr>
+        <tr class="section-head"><td colspan="2">Exit Value Estimate (yr ${holdYears})</td></tr>
+        <tr><td class="row-label">Terminal Cap Rate Method (current rents)</td><td class="row-value">$${fmt(exitCapValC)}</td></tr>
+        <tr><td class="row-label">Terminal Cap Rate Method (market rents)</td><td class="row-value">$${fmt(exitCapValM)}</td></tr>
+        <tr><td class="row-label">Appreciation Method (${fmtP(appreciation*100)} × ${holdYears} yr)</td><td class="row-value">$${fmt(price*Math.pow(1+appreciation,holdYears))}</td></tr>
+        <tr><td class="row-label" style="font-size:11px;color:#888;" colspan="2">Projection uses whichever is higher per year. Terminal cap = NOI ÷ ${fmtP(terminalCap*100)}.</td></tr>
         <tr class="section-head"><td colspan="2">Repairs &amp; Rehab</td></tr>
         ${repairHTML}
         <tr class="ci-total"><td class="row-label">Total Cash Invested</td><td class="row-value">$${fmt(totalCashInvested)}</td></tr>
       </table>
-      <p class="ci-legend">* Purple = components of Total Cash Invested. These are identical regardless of rent scenario.</p>
+      <p class="ci-legend">* Purple = components of Total Cash Invested. Identical regardless of rent scenario.</p>
     </div>
 
     <!-- INCOME & EXPENSES -->
     <div class="card">
-      <h2>Income &amp; Expenses</h2>
+      <h2>Income &amp; Expenses (Year 1)</h2>
       <table class="compare-table">
         <thead>
           <tr>
@@ -839,30 +976,39 @@ function runAnalysis() {
             <td style="background:#e8f6ef;text-align:center;font-weight:700;color:#085041;padding:8px;">Market Rents</td>
           </tr>
         </thead>
-        <tr class="section-head"><td colspan="3">Income</td></tr>
-        <tr><td class="row-label">Gross Annual Rent</td><td class="val-current">$${fmt(grossCurrent)}</td><td class="val-market">$${fmt(grossMarket)}</td></tr>
-        <tr><td class="row-label">Vacancy Loss (${Math.round(vacancyRate*100)}%)</td><td class="val-current">($${fmt(C.vacancyLoss)})</td><td class="val-market">($${fmt(M.vacancyLoss)})</td></tr>
-        <tr class="section-head"><td colspan="3">Operating Expenses</td></tr>
-        <tr><td class="row-label">Maintenance (${Math.round(maintPct*100)}%)</td><td class="val-current">$${fmt(C.maintenance)}</td><td class="val-market">$${fmt(M.maintenance)}</td></tr>
-        <tr><td class="row-label">Management (${Math.round(mgmtPct*100)}%)</td><td class="val-current">$${fmt(C.mgmtCost)}</td><td class="val-market">$${fmt(M.mgmtCost)}</td></tr>
-        <tr><td class="row-label">Property Taxes</td><td class="val-current">$${fmt(taxes)}</td><td class="val-market">$${fmt(taxes)}</td></tr>
-        <tr><td class="row-label">Insurance</td><td class="val-current">$${fmt(insurance)}</td><td class="val-market">$${fmt(insurance)}</td></tr>
-        <tr><td class="row-label">Owner Utilities</td><td class="val-current">$${fmt(utilityAnnual)}</td><td class="val-market">$${fmt(utilityAnnual)}</td></tr>
-        <tr class="subtotal"><td class="row-label">Total Operating Expenses</td><td class="val-current">$${fmt(C.totalExpenses)}</td><td class="val-market">$${fmt(M.totalExpenses)}</td></tr>
+        <tr class="section-head"><td colspan="3">Potential Gross Income</td></tr>
+        <tr class="income-row-c"><td class="row-label">Rent Income</td><td class="val-current">$${fmt(rentOnlyC)}/yr</td><td class="val-market">$${fmt(rentOnlyM)}/yr</td></tr>
+        ${otherIncome>0?`<tr class="income-row-c"><td class="row-label">Other Income (laundry, parking, etc.)</td><td class="val-current">$${fmt(otherIncome)}/yr</td><td class="val-market">$${fmt(otherIncome)}/yr</td></tr>`:''}
+        ${recoveries>0?`<tr class="income-row-c"><td class="row-label">Utility Recoveries</td><td class="val-current">$${fmt(recoveries)}/yr</td><td class="val-market">$${fmt(recoveries)}/yr</td></tr>`:''}
+        <tr class="subtotal income-row-c"><td class="row-label">Potential Gross Income</td><td class="val-current">$${fmt(grossCurrentTotal)}/yr</td><td class="val-market">$${fmt(grossMarketTotal)}/yr</td></tr>
+        <tr><td class="row-label">Vacancy Loss (${Math.round(vacancyRate*100)}%)</td><td class="val-current">($${fmt(vacLossC)})</td><td class="val-market">($${fmt(vacLossM)})</td></tr>
+        <tr class="subtotal"><td class="row-label">Effective Gross Income (EGI)</td><td class="val-current">$${fmt(egiC)}</td><td class="val-market">$${fmt(egiM)}</td></tr>
+        <tr class="section-head"><td colspan="3">Operating Expenses (Year 1 with per-line inflation)</td></tr>
+        <tr><td class="row-label">Maintenance &amp; Repairs</td><td class="val-current">$${fmt(E1C.maint)}</td><td class="val-market">$${fmt(E1M.maint)}</td></tr>
+        <tr><td class="row-label">Property Management</td><td class="val-current">$${fmt(E1C.mgmt)}</td><td class="val-market">$${fmt(E1M.mgmt)}</td></tr>
+        <tr><td class="row-label">Property Taxes</td><td class="val-current">$${fmt(E1C.taxes)}</td><td class="val-market">$${fmt(E1C.taxes)}</td></tr>
+        <tr><td class="row-label">Insurance</td><td class="val-current">$${fmt(E1C.insurance)}</td><td class="val-market">$${fmt(E1C.insurance)}</td></tr>
+        <tr><td class="row-label">Owner Utilities</td><td class="val-current">$${fmt(E1C.utilities)}</td><td class="val-market">$${fmt(E1C.utilities)}</td></tr>
+        <tr><td class="row-label">Water / Sewer</td><td class="val-current">$${fmt(E1C.water)}</td><td class="val-market">$${fmt(E1C.water)}</td></tr>
+        <tr><td class="row-label">Garbage / Trash</td><td class="val-current">$${fmt(E1C.garbage)}</td><td class="val-market">$${fmt(E1C.garbage)}</td></tr>
+        <tr><td class="row-label">Lawn / Snow</td><td class="val-current">$${fmt(E1C.lawn)}</td><td class="val-market">$${fmt(E1C.lawn)}</td></tr>
+        <tr><td class="row-label">Marketing</td><td class="val-current">$${fmt(E1C.marketing)}</td><td class="val-market">$${fmt(E1C.marketing)}</td></tr>
+        <tr><td class="row-label">Other</td><td class="val-current">$${fmt(E1C.other)}</td><td class="val-market">$${fmt(E1C.other)}</td></tr>
+        <tr class="subtotal"><td class="row-label">Total Operating Expenses</td><td class="val-current">$${fmt(E1C.total)}</td><td class="val-market">$${fmt(E1M.total)}</td></tr>
         <tr class="section-head"><td colspan="3">Returns</td></tr>
-        <tr class="subtotal"><td class="row-label">NOI / Year</td><td class="val-current">$${fmt(C.noi)}</td><td class="val-market">$${fmt(M.noi)}</td></tr>
+        <tr class="subtotal"><td class="row-label">NOI / Year</td><td class="val-current">$${fmt(noiC)}</td><td class="val-market">$${fmt(noiM)}</td></tr>
         <tr><td class="row-label">Less: Debt Service (P&amp;I)</td><td class="val-current">($${fmt(annualDebtSvc)})</td><td class="val-market">($${fmt(annualDebtSvc)})</td></tr>
         ${pmiMonthly>0?`<tr><td class="row-label">Less: PMI</td><td class="val-current">($${fmt(pmiAnnual)})</td><td class="val-market">($${fmt(pmiAnnual)})</td></tr>`:''}
-        <tr class="subtotal highlight-row"><td class="row-label">Annual Cash Flow</td><td class="val-current">$${fmt(C.annualCashflow)}</td><td class="val-market">$${fmt(M.annualCashflow)}</td></tr>
-        <tr><td class="row-label">Monthly Cash Flow</td><td class="val-current">$${fmt2(C.annualCashflow/12)}</td><td class="val-market">$${fmt2(M.annualCashflow/12)}</td></tr>
+        <tr class="subtotal highlight-row"><td class="row-label">Annual Cash Flow</td><td class="val-current">$${fmt(cfC)}</td><td class="val-market">$${fmt(cfM)}</td></tr>
+        <tr><td class="row-label">Monthly Cash Flow</td><td class="val-current">$${fmt2(cfC/12)}</td><td class="val-market">$${fmt2(cfM/12)}</td></tr>
         <tr><td class="row-label">Cash Flow / Door / Month</td><td class="val-current">$${fmt2(cfDoorC)}</td><td class="val-market">$${fmt2(cfDoorM)}</td></tr>
         <tr><td class="row-label">CF / Door After CapEx</td><td class="val-current">$${fmt2(cfDoorCapexC)}</td><td class="val-market">$${fmt2(cfDoorCapexM)}</td></tr>
-        <tr class="section-head"><td colspan="3">Tax-Adjusted Returns (estimate — consult CPA)</td></tr>
+        <tr class="section-head"><td colspan="3">Tax-Adjusted Returns (est. — consult CPA)</td></tr>
         <tr class="depr-row-c"><td class="row-label">Annual Depreciation Deduction</td><td class="val-current">$${fmt(annualDepr)}</td><td class="val-market">$${fmt(annualDepr)}</td></tr>
         <tr class="shield-row-c"><td class="row-label">Est. Tax Shield (${Math.round(marginalRate*100)}% rate)</td><td class="val-current">+$${fmt(annualTaxShield)}/yr</td><td class="val-market">+$${fmt(annualTaxShield)}/yr</td></tr>
-        <tr><td class="row-label">Tax-Adj. Effective Cash Flow</td><td class="val-current">$${fmt(C.annualCashflow+annualTaxShield)}/yr</td><td class="val-market">$${fmt(M.annualCashflow+annualTaxShield)}/yr</td></tr>
+        <tr><td class="row-label">Tax-Adj. Effective Cash Flow</td><td class="val-current">$${fmt(cfC+annualTaxShield)}/yr</td><td class="val-market">$${fmt(cfM+annualTaxShield)}/yr</td></tr>
       </table>
-      ${rentUpside>0?`<p class="upside-note">Rent upside: $${fmt(rentUpside)}/yr ($${fmt(rentUpside/12)}/mo) available at full market rents.</p>`:''}
+      ${rentUpside>0?`<p class="upside-note">Rent upside: $${fmt(rentUpside)}/yr ($${fmt(rentUpside/12)}/mo) by bringing rents to market rate.</p>`:''}
       ${pmiNote}
     </div>
 
@@ -873,10 +1019,10 @@ function runAnalysis() {
         <div>
           <div class="metrics-col-label current">Current Rents</div>
           <div class="metrics-grid">
-            <div class="metric-box current"><div class="label">Cap Rate</div><div class="value">${fmtP(C.capRate)}</div><div class="sub">Target 7%+</div></div>
+            <div class="metric-box current"><div class="label">Cap Rate</div><div class="value">${fmtP(capRateC)}</div><div class="sub">Target 7%+</div></div>
             <div class="metric-box current"><div class="label">Cash-on-Cash</div><div class="value">${fmtP(cocC)}</div><div class="sub">Target 6%+</div></div>
             <div class="metric-box current"><div class="label">GRM</div><div class="value">${grmC.toFixed(1)}x</div><div class="sub">Target &lt;10x</div></div>
-            <div class="metric-box current"><div class="label">DSCR</div><div class="value">${C.dscr.toFixed(2)}x</div><div class="sub">Target 1.25x+</div></div>
+            <div class="metric-box current"><div class="label">DSCR</div><div class="value">${dscrC.toFixed(2)}x</div><div class="sub">Target 1.25x+</div></div>
             <div class="metric-box current"><div class="label">Expense Ratio</div><div class="value">${fmtP(expRatioC)}</div><div class="sub">Normal 35–50%</div></div>
             <div class="metric-box current"><div class="label">CF / Door</div><div class="value">$${fmt2(cfDoorC)}</div><div class="sub">Target $200+</div></div>
           </div>
@@ -884,10 +1030,10 @@ function runAnalysis() {
         <div>
           <div class="metrics-col-label market">Market Rents</div>
           <div class="metrics-grid">
-            <div class="metric-box market"><div class="label">Cap Rate</div><div class="value">${fmtP(M.capRate)}</div><div class="sub">Target 7%+</div></div>
+            <div class="metric-box market"><div class="label">Cap Rate</div><div class="value">${fmtP(capRateM)}</div><div class="sub">Target 7%+</div></div>
             <div class="metric-box market"><div class="label">Cash-on-Cash</div><div class="value">${fmtP(cocM)}</div><div class="sub">Target 6%+</div></div>
             <div class="metric-box market"><div class="label">GRM</div><div class="value">${grmM.toFixed(1)}x</div><div class="sub">Target &lt;10x</div></div>
-            <div class="metric-box market"><div class="label">DSCR</div><div class="value">${M.dscr.toFixed(2)}x</div><div class="sub">Target 1.25x+</div></div>
+            <div class="metric-box market"><div class="label">DSCR</div><div class="value">${dscrM.toFixed(2)}x</div><div class="sub">Target 1.25x+</div></div>
             <div class="metric-box market"><div class="label">Expense Ratio</div><div class="value">${fmtP(expRatioM)}</div><div class="sub">Normal 35–50%</div></div>
             <div class="metric-box market"><div class="label">CF / Door</div><div class="value">$${fmt2(cfDoorM)}</div><div class="sub">Target $200+</div></div>
           </div>
@@ -903,23 +1049,24 @@ function runAnalysis() {
           <div class="irr-label">Current Rents IRR</div>
           <div class="irr-value">${irrCStr}</div>
           <div class="irr-sub">annualized total return incl. sale</div>
-          <div class="overall-box ${irrVerdC.cls}" style="margin:10px 0 0 0;font-size:12px;padding:8px;">${irrVerdC.txt}</div>
+          <div class="overall-box ${irrVerdC.cls}" style="margin:10px 0 0;font-size:12px;padding:8px;">${irrVerdC.txt}</div>
         </div>
         <div class="irr-box market">
           <div class="irr-label">Market Rents IRR</div>
           <div class="irr-value">${irrMStr}</div>
           <div class="irr-sub">annualized total return incl. sale</div>
-          <div class="overall-box ${irrVerdM.cls}" style="margin:10px 0 0 0;font-size:12px;padding:8px;">${irrVerdM.txt}</div>
+          <div class="overall-box ${irrVerdM.cls}" style="margin:10px 0 0;font-size:12px;padding:8px;">${irrVerdM.txt}</div>
         </div>
       </div>
       <div class="irr-context">
-        <strong>What IRR means:</strong> IRR is the single most important number for comparing this deal to other investments. It accounts for every dollar in (cash invested) and every dollar out (annual cash flow + net sale proceeds) over the full hold period, expressed as an annualized %. <br>
-        <strong>Benchmarks:</strong> S&amp;P 500 historical average ~10%/yr. A real estate deal should clear 10–12%+ to justify the illiquidity and hands-on management vs. just indexing. 8–10% is acceptable if you value the leverage and depreciation benefits. Below 8% is a weak deal. <br>
-        <strong>Note:</strong> IRR here includes depreciation recapture tax (~$${fmt(deprRecaptureTax)}) deducted from sale proceeds in year ${holdYears}. Does not include annual tax shield benefit — add ~$${fmt(annualTaxShield)}/yr mentally as an additional return.
+        <strong>What IRR means:</strong> Every dollar in and out over the full hold period expressed as an annualized %. The single most useful number for comparing real estate to other investments.<br>
+        <strong>Benchmarks:</strong> S&amp;P 500 historical avg ~10%/yr. Clear 10–12%+ to justify illiquidity vs. indexing. 8–10% acceptable. Below 8% is weak.<br>
+        <strong>Exit method:</strong> Sale price = higher of terminal cap rate (NOI ÷ ${fmtP(terminalCap*100)}) or ${fmtP(appreciation*100)}/yr appreciation, less ${fmtP(sellCostsPct*100)} selling costs and ~$${fmt(deprRecaptureTax)} depreciation recapture tax.<br>
+        <strong>Note:</strong> Annual tax shield (~$${fmt(annualTaxShield)}/yr) not included in IRR — treat as additional bonus return.
       </div>
     </div>
 
-    <!-- DEAL VERDICT -->
+    <!-- VERDICT -->
     <div class="card">
       <h2>Deal Verdict — Side by Side</h2>
       <div class="verdict-dual">
@@ -948,35 +1095,30 @@ function runAnalysis() {
           </table>
         </div>
         <div class="stress-box">
-          <div class="stress-label">Debt Service Coverage Ratio (DSCR)</div>
+          <div class="stress-label">Debt Service Coverage Ratio</div>
           <table class="stress-table">
             <thead><tr><th></th>${vacLabels.map(l=>`<th>${l}</th>`).join('')}</tr></thead>
             <tbody>${stressDSCRRows}</tbody>
           </table>
         </div>
       </div>
-      <p class="upside-note" style="margin-top:10px;">Green = passes threshold. Yellow = marginal. Red = fails. If the deal turns red under base rate + modest vacancy increase, your margin of safety is too thin.</p>
+      <p class="upside-note" style="margin-top:10px;">Green = passes threshold. Yellow = marginal. Red = fails. If the deal turns red on base rate + modest vacancy bump, your margin of safety is too thin.</p>
     </div>
 
-    <!-- SENSITIVITY TABLE -->
+    <!-- SENSITIVITY -->
     <div class="card">
       <h2>Sensitivity — Cash-on-Cash Return by Purchase Price &amp; Rent</h2>
-      <p style="font-size:12px;color:#888;margin-bottom:10px;">Shows how CoC return changes across price and rent scenarios. Rent columns = <strong>total monthly gross rent across all units</strong> (±$50/mo steps). Highlighted cell = your current inputs. Green ≥6%, Yellow 3–6%, Red &lt;3%.</p>
+      <p style="font-size:12px;color:#888;margin-bottom:10px;">Rent columns = <strong>total monthly gross rent across all units</strong> (±$50/mo steps). Highlighted cell = your current inputs. Green ≥6%, Yellow 3–6%, Red &lt;3%.</p>
       <div class="sens-wrap">
         <table class="sens-table">
-          <thead>
-            <tr>
-              <th class="row-head">Price \\ Rent/unit</th>
-              ${rentHeaders.map(h=>`<th>${h}</th>`).join('')}
-            </tr>
-          </thead>
+          <thead><tr><th class="row-head">Price \\ Total Rent/mo</th>${rentHeaders.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
           <tbody>${sensRows}</tbody>
         </table>
       </div>
-      <p class="upside-note" style="margin-top:10px;">Sensitivity uses your entered expense structure and financing. Adjust purchase price or rents and re-run to see updated sensitivity grid.</p>
+      <p class="upside-note" style="margin-top:10px;">Based on your entered expense structure and financing. Re-run to update after changing inputs.</p>
     </div>
 
-    <!-- PROJECTION TABLE -->
+    <!-- PROJECTION -->
     <div class="card">
       <h2>Year-by-Year Projection (${holdYears}-Year Hold)</h2>
       <div class="table-scroll">
@@ -988,10 +1130,10 @@ function runAnalysis() {
               <th class="c-head" colspan="2">Cash-on-Cash</th>
               <th rowspan="2">Eq. Paydown</th>
               <th class="c-head" colspan="2">Total Return (CF+Paydown)</th>
-              <th rowspan="2">Prop. Value</th>
+              <th rowspan="2">Exit Value*</th>
               <th rowspan="2">Loan Bal.</th>
               <th rowspan="2">Equity</th>
-              <th rowspan="2">Net if Sold*</th>
+              <th rowspan="2">Net if Sold†</th>
             </tr>
             <tr>
               <th class="c-head">Current</th><th class="m-head">Market</th>
@@ -1003,21 +1145,20 @@ function runAnalysis() {
         </table>
       </div>
       <p class="upside-note" style="margin-top:10px;">
-        ⚑ = PMI active that year. &nbsp;|&nbsp;
-        "Eq. Paydown" = principal paid that year. &nbsp;|&nbsp;
-        "Total Return" = cash flow + equity paydown. &nbsp;|&nbsp;
-        *"Net if Sold" = sale price − 8% selling costs − loan balance − est. depreciation recapture tax ($${fmt(deprRecaptureTax)}).
-        IRR uses these net sale proceeds in the final year.
+        ⚑ = PMI active. &nbsp;|&nbsp;
+        *Exit Value = higher of terminal cap rate (NOI÷${fmtP(terminalCap*100)}) or ${fmtP(appreciation*100)}/yr appreciation. &nbsp;|&nbsp;
+        †Net if Sold = Exit Value − ${fmtP(sellCostsPct*100)} selling costs − loan balance − est. depr. recapture ($${fmt(deprRecaptureTax)}).
+        Each expense line inflates at its own rate in the projection.
       </p>
     </div>
 
     <div class="notes">
-      <strong>Methodology notes:</strong>
-      Expense defaults (8% vacancy, 10% maintenance, 8% management) are set at lender/conservative grade — more conservative than many beginner tools. If you self-manage, actual results may be better, but never underwrite assuming everything goes perfectly.
-      IRR includes depreciation recapture tax at 25% of accumulated depreciation deducted from sale proceeds. It does not include the annual tax shield benefit (~$${fmt(annualTaxShield)}/yr) — treat that as an additional bonus return.
-      Depreciation recapture and capital gains tax at sale are estimated; actual amounts depend on your basis, cost segregation, and tax situation. Consult a CPA.
-      PMI drops off in projections when loan balance reaches 80% LTV; verify drop-off with your lender.
-      Sensitivity table assumes your entered expense structure and financing across all price/rent scenarios.
+      <strong>Methodology:</strong>
+      Each operating expense inflates at its own annual rate entered in the form — taxes, insurance, and utilities typically run hotter than maintenance or marketing.
+      Exit value uses the terminal cap rate method (yr-of-sale NOI ÷ terminal cap rate) floored by simple appreciation — whichever is higher — less selling costs and depreciation recapture.
+      Depreciation recapture estimated at 25% of total accumulated depreciation; actual depends on cost basis and tax situation — consult a CPA.
+      IRR uses net sale proceeds in the final year. Annual tax shield ($${fmt(annualTaxShield)}/yr) is not in IRR — treat as a bonus.
+      Sensitivity table uses yr-1 expenses. Stress test uses yr-1 expenses and entered rate/vacancy variations.
       This tool is for informational purposes only and does not constitute financial or investment advice.
     </div>
 
@@ -1027,12 +1168,7 @@ function runAnalysis() {
 }
 
 function initPage() {
-  // Use a short delay so the browser finishes restoring form state before we read it.
-  // Without this, session-restored dropdowns may not yet reflect their restored value.
-  setTimeout(() => {
-    buildUnitFields();
-    updatePMI();
-  }, 50);
+  setTimeout(() => { buildUnitFields(); updatePMI(); }, 50);
 }
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initPage);
