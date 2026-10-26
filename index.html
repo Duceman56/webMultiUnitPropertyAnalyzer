@@ -731,7 +731,7 @@ function runAnalysis() {
   // ── SENSITIVITY TABLE (price vs rent, cash-on-cash) ──
   const basePrices = [-20000, -10000, 0, 10000, 20000].map(d => price + d);
   const baseMonthlyRents = [-100, -50, 0, 50, 100].map(d => (grossCurrent / 12) + d);
-  const rentHeaders = baseMonthlyRents.map(r => `$${fmt(r)}/mo`);
+  const rentHeaders = baseMonthlyRents.map(r => `$${fmt(r)}/mo total`);
 
   let sensRows = '';
   basePrices.forEach(p => {
@@ -742,7 +742,7 @@ function runAnalysis() {
     const ci2      = downAmt2 + closingCosts + (repairFunding === 'cash' ? totalRepairs : 0) + rehabVacCost;
     let row = `<tr><td class="row-label-cell">$${fmt(p)} purchase</td>`;
     baseMonthlyRents.forEach((mr, mi) => {
-      const gross2   = mr * numUnits * 12;
+      const gross2   = mr * 12;
       const vacL2    = gross2 * vacancyRate;
       const maint2   = gross2 * maintPct;
       const mgmt2    = gross2 * mgmtPct;
@@ -961,7 +961,7 @@ function runAnalysis() {
     <!-- SENSITIVITY TABLE -->
     <div class="card">
       <h2>Sensitivity — Cash-on-Cash Return by Purchase Price &amp; Rent</h2>
-      <p style="font-size:12px;color:#888;margin-bottom:10px;">Shows how CoC return changes across price and rent scenarios. Highlighted cell = your current inputs. Green ≥6%, Yellow 3–6%, Red &lt;3%.</p>
+      <p style="font-size:12px;color:#888;margin-bottom:10px;">Shows how CoC return changes across price and rent scenarios. Rent columns = <strong>total monthly gross rent across all units</strong> (±$50/mo steps). Highlighted cell = your current inputs. Green ≥6%, Yellow 3–6%, Red &lt;3%.</p>
       <div class="sens-wrap">
         <table class="sens-table">
           <thead>
@@ -1026,7 +1026,14 @@ function runAnalysis() {
   document.getElementById('report').scrollIntoView({ behavior: 'smooth' });
 }
 
-function initPage() { buildUnitFields(); updatePMI(); }
+function initPage() {
+  // Use a short delay so the browser finishes restoring form state before we read it.
+  // Without this, session-restored dropdowns may not yet reflect their restored value.
+  setTimeout(() => {
+    buildUnitFields();
+    updatePMI();
+  }, 50);
+}
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initPage);
 } else { initPage(); }
